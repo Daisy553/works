@@ -404,7 +404,7 @@ main {
 
 .project-card.featured {
   background:
-    radial-gradient(circle at top right, rgba(124, 245, 255, 0.1), transparent 30%),
+    radial-gradient(circle at calc(var(--pointer-x) - 10px) calc(var(--pointer-y) - 16px), rgba(124, 245, 255, 0.5) 0 3px, rgba(124, 245, 255, 0.18) 4px, transparent 10px),
     linear-gradient(180deg, rgba(12, 30, 50, 0.96), rgba(6, 14, 26, 0.82));
 }
 
