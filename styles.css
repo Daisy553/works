@@ -34,17 +34,17 @@ body {
   font-family: "Noto Sans SC", sans-serif;
   color: var(--text);
   background:
-    radial-gradient(circle at var(--pointer-x) var(--pointer-y), rgba(124, 245, 255, 0.1), transparent 18%),
-    radial-gradient(circle at 20% 20%, rgba(60, 211, 255, 0.14), transparent 24%),
-    radial-gradient(circle at 80% 10%, rgba(141, 125, 255, 0.18), transparent 24%),
-    radial-gradient(circle at 50% 100%, rgba(124, 245, 255, 0.08), transparent 35%),
-    linear-gradient(180deg, var(--bg) 0%, var(--bg-deep) 100%);
+    radial-gradient(circle at 20% 20%, rgba(60, 211, 255, 0.12), transparent 30%),
+    radial-gradient(circle at 80% 15%, rgba(124, 245, 255, 0.1), transparent 30%),
+    radial-gradient(circle at 50% 90%, rgba(60, 211, 255, 0.06), transparent 35%),
+    linear-gradient(180deg, #061420 0%, #030c18 100%);
   transition: background-position 140ms ease;
 }
 
 .bg-video,
 .bg-orb,
-.grid-noise {
+.grid-noise,
+.bg-dynamic {
   position: fixed;
   inset: 0;
   pointer-events: none;
@@ -78,7 +78,7 @@ body {
   width: 20rem;
   height: 20rem;
   border-radius: 50%;
-  background: rgba(141, 125, 255, 0.16);
+  background: rgba(60, 211, 255, 0.15);
 }
 
 .grid-noise {
@@ -88,6 +88,13 @@ body {
   background-size: 32px 32px;
   mask-image: radial-gradient(circle at center, black 36%, transparent 92%);
   z-index: 0;
+}
+
+/* Dynamic mouse-following glow — sits above video/orbs/grid, below content */
+.bg-dynamic {
+  z-index: 0;
+  background: radial-gradient(circle at var(--pointer-x) var(--pointer-y), rgba(60, 211, 255, 0.18), transparent 28%);
+  mix-blend-mode: screen;
 }
 
 .page-shell {
@@ -353,7 +360,7 @@ main {
 
 .data-card.accent {
   background:
-    linear-gradient(135deg, rgba(60, 211, 255, 0.16), rgba(141, 125, 255, 0.18)),
+    linear-gradient(135deg, rgba(60, 211, 255, 0.16), rgba(124, 245, 255, 0.14)),
     linear-gradient(180deg, rgba(10, 22, 38, 0.92), rgba(7, 15, 28, 0.72));
 }
 
@@ -404,7 +411,6 @@ main {
 
 .project-card.featured {
   background:
-    radial-gradient(circle at calc(var(--pointer-x) - 10px) calc(var(--pointer-y) - 16px), rgba(124, 245, 255, 0.5) 0 3px, rgba(124, 245, 255, 0.18) 4px, transparent 10px),
     linear-gradient(180deg, rgba(12, 30, 50, 0.96), rgba(6, 14, 26, 0.82));
 }
 
