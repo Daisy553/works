@@ -3,64 +3,82 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Daisy的个人网页</title>
+  <title>Daisy 的个人网页</title>
   <meta
     name="description"
-    content="一些个人作品和喜欢的效果。"
+    content="Daisy 的技术美术、环境艺术、特效与流程作品集。"
   >
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Playfair+Display:wght@600;700&family=Space+Grotesk:wght@400;500;700&display=swap"
     rel="stylesheet"
   >
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <video class="bg-video" autoplay muted loop playsinline aria-hidden="true">
-    <source src="5200-183786525_large.mp4" type="video/mp4">
-  </video>
-  <div class="bg-orb bg-orb-a"></div>
-  <div class="bg-orb bg-orb-b"></div>
-  <div class="grid-noise"></div>
-  <div class="bg-dynamic"></div>
+  <canvas id="starfield" aria-hidden="true"></canvas>
+  <div class="scanline" aria-hidden="true"></div>
+  <div class="page-transition" aria-hidden="true"></div>
 
   <div class="page-shell">
     <header class="site-header">
-      <a class="brand" href="#top">DAISY//LAB</a>
+      <a class="brand magnetic" href="#top" aria-label="回到首页">
+        <span class="brand-mark"></span>
+        <span>DAISY / LAB</span>
+      </a>
       <nav class="site-nav" aria-label="主导航">
-        <a href="#projects">项目</a>
-        <a href="#pipeline">作品</a>
-        <a href="#capabilities">能力</a>
-        <a href="#contact">联系</a>
+        <a class="magnetic" href="#projects">项目</a>
+        <a class="magnetic" href="#pipeline">流程</a>
+        <a class="magnetic" href="#capabilities">能力</a>
+        <a class="magnetic" href="#contact">联系</a>
       </nav>
+      <button class="menu-toggle magnetic" type="button" aria-label="打开菜单" aria-expanded="false">
+        <span></span>
+        <span></span>
+      </button>
     </header>
+
+    <div class="menu-panel" aria-hidden="true">
+      <a href="#projects">Project Matrix</a>
+      <a href="#pipeline">Motion Pipeline</a>
+      <a href="#capabilities">Technical Signals</a>
+      <a href="#contact">Contact Node</a>
+    </div>
 
     <main id="top">
       <section class="hero reveal">
         <div class="hero-copy">
-          <p class="eyebrow">Visual Art / Technical Pipeline / Sci-Fi Portfolio</p>
-          <h1>Daisy的个人网页</h1>
+          <p class="eyebrow">Technical Art / Real-Time Visual / Sci-Fi Portfolio</p>
+          <h1>
+            <span>Daisy</span>
+            <span>Motion</span>
+            <span>Archive</span>
+          </h1>
           <p class="hero-text">
-            我是智勇，英文名 daisy，这是我的个人网页，展示一些我的工作经历和个人作品，以及分享一些我的技术方案和流程。
+            我是智勇，英文名 Daisy。这里整理我的技术美术、环境艺术、特效和流程实验：从 UE5 场景表现到 Houdini 程序化生成，从材质、灯光到实时叙事。
           </p>
           <div class="hero-actions">
-            <a class="button button-primary" href="#projects">跳转个人作品</a>
-            <a class="button button-secondary" href="#pipeline">我的一些技术分享</a>
+            <a class="button button-primary magnetic" href="#projects">进入作品</a>
+            <a class="button button-secondary magnetic" href="#pipeline">查看流程</a>
           </div>
         </div>
 
-        <aside class="hero-panel">
-          <div class="avatar-card">
-            <img src="66ce5350b77c68049dce5cc5c33cc1bb.jpg" alt="智勇 Daisy 的头像">
-            <div class="avatar-meta">
-              <span>technical art</span>
+        <aside class="hero-panel reveal-list">
+          <div class="portrait-frame tilt-card">
+            <img src="66ce5350b77c68049dce5cc5c33cc1bb.jpg" alt="Daisy 的头像">
+            <div class="portrait-caption">
+              <span>Profile Signal</span>
               <strong>智勇 / Daisy</strong>
             </div>
           </div>
-          <div class="data-card">
-            <span>喜欢和感兴趣的方向</span>
-            <strong>环境艺术，灯光艺术，特效</strong>
+          <div class="signal-card tilt-card">
+            <span>Current Focus</span>
+            <strong>环境艺术、灯光叙事、特效和实时流程</strong>
+          </div>
+          <div class="orbit-readout tilt-card">
+            <span>Orbit Drift</span>
+            <strong id="orbit-value">00.00</strong>
           </div>
         </aside>
       </section>
@@ -71,49 +89,53 @@
             <p class="eyebrow">Project Matrix</p>
             <h2>项目经历</h2>
           </div>
-          <p class="section-note"></p>
+          <p class="section-note">卡片会在视口内逐步显影，悬停时出现流光和轻微空间位移。</p>
         </div>
 
-        <div class="project-grid">
-          <article class="project-card featured">
+        <div class="project-grid reveal-list">
+          <article class="project-card featured tilt-card">
             <div class="project-topline">
               <span>01 / 西山居</span>
-              <span>技术美术</span>
+              <span>Technical Art</span>
             </div>
             <h3>尘白禁区</h3>
             <p>
-              美术效果的实现方案及落地（材质表现，特效），使用UE5的过场动画工作流，其他。
+              负责美术效果实现方案与落地，包括材质表现、特效、UE5 过场动画工作流和制作流程支持。
             </p>
             <ul>
               <li>材质表现</li>
-              <li>一些特效效果</li>
+              <li>Niagara 特效</li>
               <li>制片工作流</li>
             </ul>
           </article>
 
-          <article class="project-card">
+          <article class="project-card tilt-card">
             <div class="project-topline">
-              <span>02 / </span>
-              <span></span>
+              <span>02 / Prototype</span>
+              <span>Environment</span>
             </div>
-            <h3></h3>
-            <p></p>
+            <h3>夜航场景实验</h3>
+            <p>
+              暗色空间、体积雾、星轨和屏幕动效组合，用于探索游戏场景中的情绪引导。
+            </p>
             <ul>
-              <li></li>
-              <li></li>
+              <li>Lighting</li>
+              <li>Atmosphere</li>
             </ul>
           </article>
 
-          <article class="project-card">
+          <article class="project-card tilt-card">
             <div class="project-topline">
-              <span>03 /</span>
-              <span></span>
+              <span>03 / RnD</span>
+              <span>Procedural</span>
             </div>
-            <h3></h3>
-            <p></p>
+            <h3>程序化生成</h3>
+            <p>
+              使用 Houdini 和引擎工具搭建可复用的生成逻辑，让资产、植被、水体和特效具备更高迭代效率。
+            </p>
             <ul>
-              <li></li>
-              <li></li>
+              <li>Houdini</li>
+              <li>Tooling</li>
             </ul>
           </article>
         </div>
@@ -123,53 +145,56 @@
         <div class="section-heading">
           <div>
             <p class="eyebrow">Pipeline</p>
-            <h2>一些杂七杂八的作品和流程分享</h2>
+            <h2>作品与流程分享</h2>
           </div>
-          <p class="section-note"></p>
+          <p class="section-note">用纵向节点组织内容，适合后续扩展成案例详情或弹窗展示。</p>
         </div>
 
-        <div class="pipeline-grid">
-          <article class="pipeline-step">
+        <div class="timeline reveal-list">
+          <article class="pipeline-step tilt-card">
             <span class="step-index">01</span>
-            <h3>houdini相关</h3>
-            <p>布料，植被，水</p>
+            <h3>Houdini 相关</h3>
+            <p>布料、植被、水体和程序化工具，偏向可复用流程和快速迭代。</p>
           </article>
-          <article class="pipeline-step">
+          <article class="pipeline-step tilt-card">
             <span class="step-index">02</span>
             <h3>制片工作流</h3>
-            <p>使用虚幻引擎制片（sequence使用及渲染输出合成）</p>
+            <p>虚幻引擎 Sequence 使用、渲染输出、合成和镜头资产管理。</p>
           </article>
-          <article class="pipeline-step">
+          <article class="pipeline-step tilt-card">
             <span class="step-index">03</span>
-            <h3>特效</h3>
-            <p>niagara，材质，蓝图和C++</p>
+            <h3>特效实现</h3>
+            <p>Niagara、材质、蓝图和 C++ 配合，解决实时效果的表现与性能。</p>
           </article>
-          <article class="pipeline-step">
+          <article class="pipeline-step tilt-card">
             <span class="step-index">04</span>
             <h3>美术工作流</h3>
-            <p>模型贴图，规范文档，AI，插件</p>
+            <p>模型贴图、规范文档、AI 辅助、插件和跨部门交付方式。</p>
           </article>
         </div>
       </section>
 
-      <section id="capabilities" class="section reveal">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">Capabilities</p>
-            <h2>个人技能</h2>
-          </div>
-          <p class="section-note"></p>
+      <section id="capabilities" class="section split-section reveal">
+        <div>
+          <p class="eyebrow">Capabilities</p>
+          <h2>个人技能</h2>
+          <p class="large-copy">
+            我关注“最终画面”和“可持续流程”之间的平衡：既要让效果足够有记忆点，也要让团队能复用、能排查、能继续扩展。
+          </p>
         </div>
-
-        <div class="capability-layout">
-          <div class="capability-copy">
-            <p>
-              使用
-            </p>
-            <p>
-              
-            </p>
-          </div>
+        <div class="capability-list reveal-list">
+          <article class="capability-card tilt-card">
+            <span>01</span>
+            <strong>实时渲染、灯光、材质与后处理</strong>
+          </article>
+          <article class="capability-card tilt-card">
+            <span>02</span>
+            <strong>Niagara、蓝图、C++ 与工具脚本</strong>
+          </article>
+          <article class="capability-card tilt-card">
+            <span>03</span>
+            <strong>Houdini 程序化生成与资产流程</strong>
+          </article>
         </div>
       </section>
 
@@ -179,40 +204,39 @@
             <p class="eyebrow">Tool Stack</p>
             <h2>工具栈</h2>
           </div>
-          <p class="section-note">你可以把这里替换成自己真实使用的软件和流程节点。</p>
         </div>
 
-        <div class="tool-marquee">
-          <span>Blender</span>
-          <span>Substance 3D Designer</span>
-          <span>Unreal Engine</span>
-          <span>Photoshop</span>
-          <span>After Effects</span>
-          <span>Nuke</span>
-          <span>Houdini</span>
-          <span>其他</span>
+        <div class="tool-marquee" aria-label="工具列表">
+          <div class="marquee-track">
+            <span>Unreal Engine</span>
+            <span>Houdini</span>
+            <span>Blender</span>
+            <span>Substance 3D</span>
+            <span>Photoshop</span>
+            <span>After Effects</span>
+            <span>Nuke</span>
+            <span>Python</span>
+            <span>Unreal Engine</span>
+            <span>Houdini</span>
+            <span>Blender</span>
+            <span>Substance 3D</span>
+          </div>
         </div>
       </section>
 
-      <section id="contact" class="section reveal">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">Contact Node</p>
-            <h2>联系我</h2>
-          </div>
-          <p class="section-note"></p>
-        </div>
-
-        <div class="contact-panel">
+      <section id="contact" class="section contact-section reveal">
+        <div>
+          <p class="eyebrow">Contact Node</p>
+          <h2>联系我</h2>
           <p>
-            如果有工作需求，合作需求，可以通过下方方式联系我。
+            如果有工作需求、合作需求，或者想交流实时美术、特效与流程，可以通过下面的方式联系我。
           </p>
-          <div class="contact-links">
-            <a href="mailto:bigorangeyong@gmail.com">bigorangeyong@gmail.com</a>
-            <a href="https://www.artstation.com/" target="_blank" rel="noreferrer">ArtStation</a>
-            <a href="https://space.bilibili.com/3247232?spm_id_from=333.788.0.0" target="_blank" rel="noreferrer">Bilibili</a>
-            <a href="https://github.com/" target="_blank" rel="noreferrer">GitHub</a>
-          </div>
+        </div>
+        <div class="contact-links reveal-list">
+          <a class="magnetic" href="mailto:bigorangeyong@gmail.com">bigorangeyong@gmail.com</a>
+          <a class="magnetic" href="https://www.artstation.com/" target="_blank" rel="noreferrer">ArtStation</a>
+          <a class="magnetic" href="https://space.bilibili.com/3247232?spm_id_from=333.788.0.0" target="_blank" rel="noreferrer">Bilibili</a>
+          <a class="magnetic" href="https://github.com/" target="_blank" rel="noreferrer">GitHub</a>
         </div>
       </section>
     </main>
