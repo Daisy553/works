@@ -68,14 +68,25 @@ button {
   font: inherit;
 }
 
+.room-bg-video,
 #pixel-bg {
   position: fixed;
   inset: 0;
-  z-index: 0;
   width: 100vw;
   height: 100vh;
   display: block;
+}
+
+.room-bg-video {
+  z-index: 0;
+  object-fit: cover;
   background: #050403;
+  filter: brightness(0.82) saturate(0.96);
+}
+
+#pixel-bg {
+  z-index: 1;
+  background: transparent;
   image-rendering: pixelated;
   image-rendering: crisp-edges;
 }
@@ -993,6 +1004,10 @@ body::before {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .room-bg-video {
+    display: none;
+  }
+
   *,
   *::before,
   *::after {

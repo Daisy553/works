@@ -6,10 +6,10 @@ Static personal portfolio for Daisy. The site is a lightweight, data-driven arch
 
 - `index.html` - semantic page shell and detail dialog anchors.
 - `styles.css` - visual system, responsive layout, album transitions, and detail view styling.
-- `script.js` - data rendering, album/category interactions, detail view behavior, and canvas background dust/light treatment.
+- `script.js` - data rendering, album/category interactions, detail view behavior, and background video/canvas fallback handling.
 - `project-data.js` - portfolio owner info, categories, items, media, and technical notes.
 - `portfolio-state.js` - pure helpers for category filtering and cyclic album navigation.
-- `assets/` - background and portfolio media.
+- `assets/` - background poster/video and portfolio media.
 - `tests/` - Node contract tests for DOM, CSS, data, script behavior, and state helpers.
 - `docs/maintenance.md` - maintenance rules for future edits.
 

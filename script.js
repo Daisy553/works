@@ -6,6 +6,7 @@
     return;
   }
 
+  const backgroundVideo = document.querySelector('#room-bg-video');
   const canvas = document.querySelector('#pixel-bg');
   const shell = document.querySelector('[data-portfolio-shell]');
   const categoryNav = document.querySelector('[data-category-nav]');
@@ -39,6 +40,7 @@
     navFeedbackTimer: null,
     directorySwitchTimer: null,
     directoryFadeTimer: null,
+    videoBackgroundFailed: false,
     feedbackCategoryId: '',
   };
 
@@ -93,6 +95,30 @@
     }
 
     parent.replaceChildren(...children);
+  }
+
+  function usesVideoBackground() {
+    return Boolean(backgroundVideo && !appState.videoBackgroundFailed && !reducedMotionQuery.matches);
+  }
+
+  function syncBackgroundVideo() {
+    if (!backgroundVideo) {
+      return;
+    }
+
+    if (!usesVideoBackground()) {
+      backgroundVideo.pause();
+      return;
+    }
+
+    const playAttempt = backgroundVideo.play();
+
+    if (playAttempt && typeof playAttempt.catch === 'function') {
+      playAttempt.catch(() => {
+        appState.videoBackgroundFailed = true;
+        drawBackground(0);
+      });
+    }
   }
 
   function renderNavigation() {
@@ -554,6 +580,11 @@
       }
     });
 
+    backgroundVideo?.addEventListener('error', () => {
+      appState.videoBackgroundFailed = true;
+      drawBackground(0);
+    });
+
     reducedMotionQuery.addEventListener('change', startBackground);
   }
 
@@ -697,16 +728,17 @@
     const lowHeight = lowResCanvas.height;
     const breath = 0.5 + Math.sin(time * 0.00072) * 0.5;
     const grainAlpha = 0.004 + breath * 0.004;
+    const useVideo = usesVideoBackground();
 
     lowResCtx.imageSmoothingEnabled = false;
     lowResCtx.clearRect(0, 0, lowWidth, lowHeight);
 
     let coverRect = null;
 
-    if (appState.backgroundReady) {
+    if (!useVideo && appState.backgroundReady) {
       coverRect = drawCoverImage(lowResCtx, backgroundImage, lowWidth, lowHeight);
       drawBreathingImageRegions(lowResCtx, backgroundImage, coverRect, time);
-    } else {
+    } else if (!useVideo) {
       const gradient = lowResCtx.createLinearGradient(0, 0, lowWidth, lowHeight);
       gradient.addColorStop(0, '#4a3824');
       gradient.addColorStop(0.52, '#30251d');
@@ -758,6 +790,8 @@
   }
 
   function startBackground() {
+    syncBackgroundVideo();
+
     if (reducedMotionQuery.matches) {
       animationActive = false;
       drawBackground(0);

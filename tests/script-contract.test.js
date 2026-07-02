@@ -5,6 +5,7 @@ const path = require('path');
 const script = fs.readFileSync(path.join(__dirname, '..', 'script.js'), 'utf8');
 
 const requiredSnippets = [
+  '#room-bg-video',
   '#pixel-bg',
   'DAISY_PORTFOLIO',
   'DAISY_PORTFOLIO_STATE',
@@ -26,6 +27,9 @@ const requiredSnippets = [
   'softLightRegions',
   'drawSoftImageRegion',
   'drawBreathingImageRegions',
+  'usesVideoBackground',
+  'syncBackgroundVideo',
+  'videoBackgroundFailed',
   'updateNavigationState',
   'is-switching-out',
   'directorySwitchTimer',

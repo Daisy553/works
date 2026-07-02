@@ -15,6 +15,16 @@ assert.ok(
   DAISY_PORTFOLIO.background.src.endsWith("assets/interior-room-reference.png"),
   "background source should point at the room reference asset"
 );
+assert.strictEqual(
+  DAISY_PORTFOLIO.background.video.mp4,
+  "assets/background-loop.mp4",
+  "background mp4 loop should use the processed asset"
+);
+assert.strictEqual(
+  DAISY_PORTFOLIO.background.video.webm,
+  "assets/background-loop.webm",
+  "background webm loop should use the processed asset"
+);
 
 assert.deepStrictEqual(
   DAISY_PORTFOLIO.categories.map(({ id, label }) => [id, label]),

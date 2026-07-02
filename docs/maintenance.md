@@ -18,13 +18,14 @@ This repository is a static personal portfolio, not a marketing landing page. Th
 - Store project thumbnails, posters, and reels under `assets/work/`.
 - Use descriptive asset names, for example `snowbreak-reel.mp4` and `snowbreak-poster.jpg`.
 - Keep large videos compressed for web preview. Prefer a short reel or poster image over raw capture files.
-- Future animated background work should use a prepared `mp4/webm` cinemagraph asset with a static poster fallback, not ad hoc full-screen distortion effects.
+- Animated background work should use prepared `mp4/webm` cinemagraph assets with a static poster fallback, not ad hoc full-screen distortion effects.
 
 ## Motion
 
 - Foreground album transitions may be expressive but should remain readable.
 - Background motion should be calm and subordinate to portfolio content.
 - Avoid abstract light streaks, large area shaking, camera movement, or effects that make text harder to read.
+- Keep the background video layer separate from the canvas overlay. The canvas should only provide subtle dust, scanline, vignette, or static fallback treatment.
 - Respect `prefers-reduced-motion` for animation-heavy changes.
 
 ## Testing

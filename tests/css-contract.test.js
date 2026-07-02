@@ -5,6 +5,7 @@ const path = require('path');
 const css = fs.readFileSync(path.join(__dirname, '..', 'styles.css'), 'utf8');
 
 const requiredSelectors = [
+  '.room-bg-video',
   '#pixel-bg',
   '.portfolio-shell',
   '.identity-panel',

@@ -5,6 +5,14 @@ const path = require('path');
 const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
 
 const requiredHooks = [
+  'id="room-bg-video"',
+  'autoplay',
+  'muted',
+  'loop',
+  'playsinline',
+  'poster="assets/interior-room-reference.png"',
+  'src="assets/background-loop.webm"',
+  'src="assets/background-loop.mp4"',
   'id="pixel-bg"',
   'class="portfolio-shell"',
   'data-category-nav',

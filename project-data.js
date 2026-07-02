@@ -19,6 +19,10 @@
     },
     background: {
       src: "assets/interior-room-reference.png",
+      video: {
+        mp4: "assets/background-loop.mp4",
+        webm: "assets/background-loop.webm",
+      },
       alt: "Pixel-art inspired interior room reference with warm practical light and portfolio desk details.",
     },
     categories: [
