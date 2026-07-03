@@ -40,6 +40,7 @@
     navFeedbackTimer: null,
     directorySwitchTimer: null,
     directoryFadeTimer: null,
+    backgroundDriftFrame: null,
     videoBackgroundFailed: false,
     feedbackCategoryId: '',
   };
@@ -129,15 +130,28 @@
     const buttons = portfolio.categories.map((category, index) => {
       const button = document.createElement('button');
       const isActive = category.id === appState.categoryId;
+      const itemCount = stateApi.getCategoryItems(portfolio, category.id).length;
+      const label = document.createElement('span');
+      const count = document.createElement('span');
 
       button.type = 'button';
       const isFeedback = category.id === appState.feedbackCategoryId;
 
       button.className = `directory-button${isActive ? ' is-active' : ''}${isFeedback ? ' is-feedback' : ''}`;
-      button.textContent = category.label;
       button.dataset.categoryId = category.id;
+      button.setAttribute('aria-label', `${category.label}, ${itemCount} ${itemCount === 1 ? 'work' : 'works'}`);
       button.setAttribute('aria-pressed', String(isActive));
       button.setAttribute('data-index', String(index + 1).padStart(2, '0'));
+      if (isActive) {
+        button.setAttribute('aria-current', 'true');
+      }
+
+      label.className = 'directory-label';
+      label.textContent = category.label;
+      count.className = 'directory-count';
+      count.textContent = String(itemCount).padStart(2, '0');
+      count.setAttribute('aria-hidden', 'true');
+      button.append(label, count);
       button.addEventListener('click', () => setCategory(category.id));
 
       return button;
@@ -158,6 +172,11 @@
       button.classList.toggle('is-active', isActive);
       button.classList.toggle('is-feedback', isFeedback);
       button.setAttribute('aria-pressed', String(isActive));
+      if (isActive) {
+        button.setAttribute('aria-current', 'true');
+      } else {
+        button.removeAttribute('aria-current');
+      }
     });
   }
 
@@ -524,6 +543,43 @@
     restorePreviousFocus();
   }
 
+  function setBackgroundDrift(x, y) {
+    const rootStyle = document.documentElement?.style;
+
+    if (!rootStyle) {
+      return;
+    }
+
+    rootStyle.setProperty('--bg-shift-x', `${x.toFixed(2)}px`);
+    rootStyle.setProperty('--bg-shift-y', `${y.toFixed(2)}px`);
+  }
+
+  function resetBackgroundDrift() {
+    window.cancelAnimationFrame(appState.backgroundDriftFrame);
+    setBackgroundDrift(0, 0);
+  }
+
+  function isForegroundTarget(target) {
+    return target instanceof Element && Boolean(target.closest('.identity-panel, .album-card, .album-control, .directory-button, .detail-view.is-open'));
+  }
+
+  function updateBackgroundDrift(event) {
+    if (reducedMotionQuery.matches || isForegroundTarget(event.target)) {
+      resetBackgroundDrift();
+      return;
+    }
+
+    const viewportWidth = window.innerWidth || 1;
+    const viewportHeight = window.innerHeight || 1;
+    const x = ((event.clientX / viewportWidth) - 0.5) * 10;
+    const y = ((event.clientY / viewportHeight) - 0.5) * 7;
+
+    window.cancelAnimationFrame(appState.backgroundDriftFrame);
+    appState.backgroundDriftFrame = window.requestAnimationFrame(() => {
+      setBackgroundDrift(x, y);
+    });
+  }
+
   function bindEvents() {
     albumPrev?.addEventListener('click', () => moveAlbum(-1));
     albumNext?.addEventListener('click', () => moveAlbum(1));
@@ -574,18 +630,25 @@
 
     window.addEventListener('resize', () => {
       resizeCanvas();
+      resetBackgroundDrift();
 
       if (reducedMotionQuery.matches) {
         drawBackground(0);
       }
     });
 
+    document.addEventListener('mousemove', updateBackgroundDrift);
+    document.addEventListener('mouseleave', resetBackgroundDrift);
+
     backgroundVideo?.addEventListener('error', () => {
       appState.videoBackgroundFailed = true;
       drawBackground(0);
     });
 
-    reducedMotionQuery.addEventListener('change', startBackground);
+    reducedMotionQuery.addEventListener('change', () => {
+      resetBackgroundDrift();
+      startBackground();
+    });
   }
 
   function resizeCanvas() {
