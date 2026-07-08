@@ -59,6 +59,7 @@ body::after {
   background:
     linear-gradient(90deg, rgba(2, 2, 2, 0.04), rgba(2, 2, 2, 0.01) 38%, rgba(2, 2, 2, 0.32) 100%),
     linear-gradient(180deg, rgba(3, 3, 3, 0.02), rgba(3, 3, 3, 0.26) 72%, rgba(3, 3, 3, 0.58));
+  transition: background 380ms ease, opacity 380ms ease;
 }
 
 button,
@@ -88,6 +89,9 @@ button {
   object-position: center center;
   background: #050403;
   filter: brightness(0.88) saturate(0.98);
+  transition:
+    transform 420ms cubic-bezier(0.16, 0.84, 0.26, 1),
+    filter 460ms ease;
 }
 
 #pixel-bg {
@@ -95,6 +99,26 @@ button {
   background: transparent;
   image-rendering: pixelated;
   image-rendering: crisp-edges;
+  transition:
+    transform 420ms cubic-bezier(0.16, 0.84, 0.26, 1),
+    opacity 460ms ease;
+}
+
+body.is-detail-open::after {
+  background:
+    radial-gradient(circle at 50% 62%, rgba(216, 198, 168, 0.08), rgba(3, 3, 3, 0.18) 42%, rgba(2, 2, 2, 0.5) 100%),
+    linear-gradient(90deg, rgba(2, 2, 2, 0.14), rgba(2, 2, 2, 0.24) 48%, rgba(2, 2, 2, 0.52) 100%),
+    linear-gradient(180deg, rgba(3, 3, 3, 0.08), rgba(3, 3, 3, 0.46));
+}
+
+body.is-detail-open .room-bg-video {
+  filter: brightness(0.72) saturate(0.84) blur(0.6px);
+  transform: translate3d(var(--bg-shift-x), var(--bg-shift-y), 0) scale(1.035);
+}
+
+body.is-detail-open #pixel-bg {
+  opacity: 0.72;
+  transform: translate3d(var(--bg-shift-x), var(--bg-shift-y), 0) scale(1.035);
 }
 
 .portfolio-shell {
@@ -309,6 +333,11 @@ button {
   display: block;
   object-fit: cover;
   filter: contrast(1.04) saturate(0.82);
+  transform: scale(1);
+  transition:
+    transform 640ms cubic-bezier(0.16, 0.84, 0.26, 1),
+    filter 420ms ease;
+  will-change: transform;
 }
 
 .album-card.is-active {
@@ -366,6 +395,14 @@ button {
 .album-card.is-active:focus-visible {
   transform: translate3d(-50%, -8px, 0) rotateY(0deg) rotateZ(0deg) scale(1.02);
   box-shadow: 0 42px 122px rgba(0, 0, 0, 0.64);
+}
+
+.album-card:hover img,
+.album-card:hover video,
+.album-card:focus-visible img,
+.album-card:focus-visible video {
+  filter: contrast(1.08) saturate(0.92) brightness(1.04);
+  transform: translate3d(0, -1.2%, 0) scale(1.035);
 }
 
 .album-caption {
@@ -607,8 +644,10 @@ button {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(3, 3, 3, 0.78);
-  backdrop-filter: blur(8px);
+  background:
+    radial-gradient(circle at 50% 54%, rgba(216, 198, 168, 0.1), rgba(3, 3, 3, 0.22) 36%, rgba(3, 3, 3, 0.48) 100%),
+    rgba(3, 3, 3, 0.34);
+  backdrop-filter: blur(4px) saturate(0.9);
 }
 
 .detail-view.is-open {
@@ -632,13 +671,14 @@ button {
   background:
     linear-gradient(135deg, rgba(255, 246, 226, 0.09), rgba(255, 246, 226, 0.024)),
     var(--surface-strong);
-  box-shadow: 0 34px 120px rgba(0, 0, 0, 0.66);
-  transform: translateY(20px) scale(0.985);
-  transition: transform 340ms ease;
+  box-shadow: 0 34px 120px rgba(0, 0, 0, 0.66), 0 0 0 1px rgba(216, 198, 168, 0.03);
+  transform: translateY(22px) scale(0.982);
+  transition: transform 380ms cubic-bezier(0.16, 0.84, 0.26, 1), box-shadow 380ms ease;
 }
 
 .detail-view.is-open .detail-panel {
   transform: translateY(0) scale(1);
+  box-shadow: 0 38px 140px rgba(0, 0, 0, 0.72), 0 0 72px rgba(216, 198, 168, 0.08);
 }
 
 .detail-media {

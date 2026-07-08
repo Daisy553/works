@@ -515,6 +515,8 @@
     fillList(detailTags, item.tags);
     fillList(detailPoints, item.technicalPoints);
 
+    resetBackgroundDrift();
+    document.body?.classList.add('is-detail-open');
     detail.classList.add('is-open');
     detail.setAttribute('aria-hidden', 'false');
     shell?.setAttribute('aria-hidden', 'true');
@@ -532,6 +534,7 @@
     }
 
     pauseDetailMedia();
+    document.body?.classList.remove('is-detail-open');
     detail.classList.remove('is-open');
     detail.setAttribute('aria-hidden', 'true');
     shell?.setAttribute('aria-hidden', 'false');
