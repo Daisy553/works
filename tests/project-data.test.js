@@ -2,15 +2,24 @@
 const { DAISY_PORTFOLIO } = require("../project-data.js");
 
 const requiredCategories = [
-  ["commercial", "Commercial"],
-  ["personal", "Personal"],
-  ["breakdown", "Breakdown"],
-  ["research", "Research"],
-  ["about", "About"],
+  ["about", "关于我 / About"],
+  ["personal", "作品 / Works"],
+  ["breakdown", "分享 / Share"],
+  ["commercial", "商业项目 / Commercial"],
 ];
 
 assert.ok(DAISY_PORTFOLIO, "DAISY_PORTFOLIO export is required");
-assert.strictEqual(DAISY_PORTFOLIO.owner.name, "Daisy");
+assert.strictEqual(DAISY_PORTFOLIO.owner.name, "Daisy Lab");
+assert.strictEqual(
+  DAISY_PORTFOLIO.owner.links.bilibili,
+  "https://space.bilibili.com/3247232?spm_id_from=333.1007.0.0",
+  "bilibili link should point at Daisy's profile"
+);
+assert.strictEqual(
+  DAISY_PORTFOLIO.owner.links.github,
+  "https://github.com/Daisy553",
+  "github link should point at Daisy's profile"
+);
 assert.ok(
   DAISY_PORTFOLIO.background.src.endsWith("assets/interior-room-reference.png"),
   "background source should point at the room reference asset"
@@ -33,6 +42,7 @@ assert.deepStrictEqual(
 
 const validCategoryIds = new Set(requiredCategories.map(([id]) => id));
 const requiredItemIds = [
+  "about-daisy-lab",
   "snowbreak-production",
   "houdini-procedural-workflow",
   "niagara-vfx-study",
@@ -45,6 +55,20 @@ const itemIds = new Set(DAISY_PORTFOLIO.items.map(({ id }) => id));
 for (const id of requiredItemIds) {
   assert.ok(itemIds.has(id), `required item ${id} is missing`);
 }
+
+const about = DAISY_PORTFOLIO.items.find(({ id }) => id === "about-daisy-lab");
+assert.ok(about, "about-daisy-lab item is required");
+assert.strictEqual(about.title, "智勇");
+assert.strictEqual(about.role, "技术美术（美术向）");
+assert.strictEqual(about.summary, "什么都会一点的菜鸟");
+assert.strictEqual(about.thumbnail, "assets/work/zhiyong-avatar.png");
+assert.strictEqual(about.media[0].src, "assets/work/zhiyong-avatar.png");
+assert.strictEqual(about.media[0].fit, "contain");
+assert.deepStrictEqual(about.technicalPoints, [
+  "用热爱做游戏。",
+  "做着 Shader，也做着各种奇奇怪怪的想法。",
+  "好奇心驱动一切，希望我永远在前进的路上。",
+]);
 
 let hasVideo = false;
 for (const item of DAISY_PORTFOLIO.items) {

@@ -18,7 +18,6 @@ const requiredSelectors = [
   '.directory.is-switching-out',
   '.directory-button.is-active',
   '.detail-view.is-open',
-  '.archive-status',
   '.album-controls',
   '.album-control-prev::before',
   '@keyframes archiveNextActive',

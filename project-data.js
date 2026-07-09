@@ -8,14 +8,19 @@
   root.DAISY_PORTFOLIO = portfolio.DAISY_PORTFOLIO;
 })(typeof globalThis !== "undefined" ? globalThis : this, function () {
   const placeholderImage = "assets/work/snowbreak-poster.jpg";
+  const avatarImage = "assets/work/zhiyong-avatar.png";
 
   const DAISY_PORTFOLIO = {
     owner: {
-      name: "Daisy",
+      name: "Daisy Lab",
       title: "Technical Artist / Realtime Visual Maker",
-      summary:
-        "Realtime visual maker focused on production-ready effects, procedural workflows, and art-directed rendering for games and interactive media.",
+      summary: "一些有用无用的想法。",
       email: "bigorangeyong@gmail.com",
+      phone: "18747442595",
+      links: {
+        bilibili: "https://space.bilibili.com/3247232?spm_id_from=333.1007.0.0",
+        github: "https://github.com/Daisy553",
+      },
     },
     background: {
       src: "assets/interior-room-reference.png",
@@ -26,13 +31,35 @@
       alt: "Pixel-art inspired interior room reference with warm practical light and portfolio desk details.",
     },
     categories: [
-      { id: "commercial", label: "Commercial" },
-      { id: "personal", label: "Personal" },
-      { id: "breakdown", label: "Breakdown" },
-      { id: "research", label: "Research" },
-      { id: "about", label: "About" },
+      { id: "about", label: "关于我 / About" },
+      { id: "personal", label: "作品 / Works" },
+      { id: "breakdown", label: "分享 / Share" },
+      { id: "commercial", label: "商业项目 / Commercial" },
     ],
     items: [
+      {
+        id: "about-daisy-lab",
+        title: "智勇",
+        category: "about",
+        year: "Now",
+        role: "技术美术（美术向）",
+        summary: "什么都会一点的菜鸟",
+        thumbnail: avatarImage,
+        tags: ["关于我", "技术美术", "Shader"],
+        media: [
+          {
+            type: "image",
+            src: avatarImage,
+            alt: "智勇的个人头像。",
+            fit: "contain",
+          },
+        ],
+        technicalPoints: [
+          "用热爱做游戏。",
+          "做着 Shader，也做着各种奇奇怪怪的想法。",
+          "好奇心驱动一切，希望我永远在前进的路上。",
+        ],
+      },
       {
         id: "snowbreak-production",
         title: "Snowbreak Production Effects",
@@ -60,7 +87,7 @@
       {
         id: "houdini-procedural-workflow",
         title: "Houdini Procedural Workflow",
-        category: "research",
+        category: "breakdown",
         year: "2024",
         role: "Technical Artist / Procedural Tooling",
         summary:

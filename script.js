@@ -13,8 +13,6 @@
   const albumTrack = document.querySelector('[data-album-track]');
   const albumPrev = document.querySelector('[data-album-prev]');
   const albumNext = document.querySelector('[data-album-next]');
-  const categoryLabel = document.querySelector('[data-category-label]');
-  const albumCount = document.querySelector('[data-album-count]');
   const detail = document.querySelector('#work-detail');
   const detailMedia = document.querySelector('[data-detail-media]');
   const detailTitle = document.querySelector('[data-detail-title]');
@@ -131,6 +129,7 @@
       const button = document.createElement('button');
       const isActive = category.id === appState.categoryId;
       const itemCount = stateApi.getCategoryItems(portfolio, category.id).length;
+      const directoryIndex = String(index).padStart(2, '0');
       const label = document.createElement('span');
       const count = document.createElement('span');
 
@@ -141,7 +140,7 @@
       button.dataset.categoryId = category.id;
       button.setAttribute('aria-label', `${category.label}, ${itemCount} ${itemCount === 1 ? 'work' : 'works'}`);
       button.setAttribute('aria-pressed', String(isActive));
-      button.setAttribute('data-index', String(index + 1).padStart(2, '0'));
+      button.setAttribute('data-index', directoryIndex);
       if (isActive) {
         button.setAttribute('aria-current', 'true');
       }
@@ -149,7 +148,7 @@
       label.className = 'directory-label';
       label.textContent = category.label;
       count.className = 'directory-count';
-      count.textContent = String(itemCount).padStart(2, '0');
+      count.textContent = directoryIndex;
       count.setAttribute('aria-hidden', 'true');
       button.append(label, count);
       button.addEventListener('click', () => setCategory(category.id));
@@ -198,19 +197,6 @@
     if (diff === 2) return 'far-after';
 
     return 'hidden';
-  }
-
-  function updateArchiveStatus(items) {
-    const activeCategory = getActiveCategory();
-
-    if (categoryLabel) {
-      categoryLabel.textContent = activeCategory ? activeCategory.label : 'Archive';
-    }
-
-    if (albumCount) {
-      const current = items.length > 0 ? appState.albumIndex + 1 : 0;
-      albumCount.textContent = `${String(current).padStart(2, '0')} / ${String(items.length).padStart(2, '0')}`;
-    }
   }
 
   function markAlbumMotion(direction) {
@@ -310,7 +296,6 @@
 
     const items = getItems();
     appState.albumIndex = stateApi.normalizeAlbumIndex(appState.albumIndex, items.length);
-    updateArchiveStatus(items);
 
     if (items.length === 0) {
       const empty = document.createElement('p');
@@ -407,6 +392,9 @@
     const image = document.createElement('img');
     image.src = media.src;
     image.alt = media.alt || 'Project image';
+    if (media.fit === 'contain') {
+      image.classList.add('is-contain');
+    }
     return image;
   }
 

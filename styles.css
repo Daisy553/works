@@ -167,8 +167,9 @@ body.is-detail-open #pixel-bg {
 .eyebrow,
 .identity-panel h1,
 .identity-panel p,
+.contact-list,
+.contact-value,
 .contact-link,
-.archive-status,
 .album-caption h2,
 .album-caption p,
 .directory-button,
@@ -204,7 +205,6 @@ body.is-detail-open #pixel-bg {
 }
 
 .contact-link {
-  margin-top: 16px;
   display: inline-block;
   color: var(--ink-muted);
   font-size: 0.76rem;
@@ -212,10 +212,41 @@ body.is-detail-open #pixel-bg {
   transition: color 220ms ease;
 }
 
+.contact-value {
+  color: var(--ink-muted);
+  font-size: 0.76rem;
+}
+
+.contact-list {
+  margin-top: 18px;
+  padding: 0;
+  display: grid;
+  gap: 7px;
+  list-style: none;
+}
+
+.contact-list li {
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr);
+  gap: 12px;
+  align-items: baseline;
+  color: rgba(245, 239, 227, 0.38);
+  font-size: 0.7rem;
+}
+
+.contact-placeholder {
+  cursor: default;
+}
+
 .contact-link:hover,
 .contact-link:focus-visible {
   color: var(--ink);
   outline: none;
+}
+
+.contact-placeholder:hover,
+.contact-placeholder:focus-visible {
+  color: var(--ink-muted);
 }
 
 .album-stage {
@@ -225,7 +256,7 @@ body.is-detail-open #pixel-bg {
   align-self: center;
   min-height: min(86vh, 900px);
   display: grid;
-  grid-template-rows: auto minmax(650px, auto) auto;
+  grid-template-rows: minmax(650px, auto) auto;
   align-content: center;
   align-items: start;
   padding: clamp(20px, 4vh, 44px) 0 clamp(20px, 4vh, 44px);
@@ -259,20 +290,6 @@ body.is-detail-open #pixel-bg {
 .portfolio-shell:has(.directory:focus-within) .album-stage {
   opacity: 1;
   filter: saturate(1) brightness(1);
-}
-
-.archive-status {
-  position: relative;
-  z-index: 4;
-  width: min(720px, 90%);
-  margin: 0 auto 8px;
-  display: flex;
-  justify-content: space-between;
-  gap: 18px;
-  color: var(--ink-muted);
-  font-size: 0.72rem;
-  font-weight: 700;
-  text-transform: uppercase;
 }
 
 .album-track {
@@ -702,6 +719,10 @@ body.is-detail-open #pixel-bg {
   object-fit: cover;
 }
 
+.detail-media img.is-contain {
+  object-fit: contain;
+}
+
 .detail-copy {
   min-width: 0;
   display: flex;
@@ -1054,10 +1075,9 @@ body::before {
 
   .album-stage {
     min-height: 500px;
-    grid-template-rows: auto minmax(390px, 1fr) auto;
+    grid-template-rows: minmax(390px, 1fr) auto;
   }
 
-  .archive-status,
   .album-controls {
     width: min(410px, 94%);
   }
