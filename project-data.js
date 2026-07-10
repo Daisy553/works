@@ -41,11 +41,11 @@
         id: "about-daisy-lab",
         title: "智勇",
         category: "about",
-        year: "Now",
+        year: "27",
         role: "技术美术（美术向）",
         summary: "什么都会一点的菜鸟",
         thumbnail: avatarImage,
-        tags: ["关于我", "技术美术", "Shader"],
+        tags: ["TA", "EnvArt", "Shader"],
         media: [
           {
             type: "image",
@@ -55,9 +55,9 @@
           },
         ],
         technicalPoints: [
-          "用热爱做游戏。",
-          "做着 Shader，也做着各种奇奇怪怪的想法。",
-          "好奇心驱动一切，希望我永远在前进的路上。",
+          "爱猫人士",
+          "各种奇奇怪怪的想法。",
+          "调参大师",
         ],
       },
       {

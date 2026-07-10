@@ -65,9 +65,9 @@ assert.strictEqual(about.thumbnail, "assets/work/zhiyong-avatar.png");
 assert.strictEqual(about.media[0].src, "assets/work/zhiyong-avatar.png");
 assert.strictEqual(about.media[0].fit, "contain");
 assert.deepStrictEqual(about.technicalPoints, [
-  "用热爱做游戏。",
-  "做着 Shader，也做着各种奇奇怪怪的想法。",
-  "好奇心驱动一切，希望我永远在前进的路上。",
+  "爱猫人士",
+  "各种奇奇怪怪的想法。",
+  "调参大师",
 ]);
 
 let hasVideo = false;
