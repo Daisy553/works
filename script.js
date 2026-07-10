@@ -384,7 +384,10 @@
       video.src = media.src;
       video.poster = media.poster || '';
       video.controls = true;
+      video.autoplay = true;
+      video.muted = true;
       video.playsInline = true;
+      video.preload = 'metadata';
       video.setAttribute('aria-label', media.alt || 'Project video');
       return video;
     }
@@ -493,6 +496,12 @@
 
     if (detailMedia) {
       detailMedia.replaceChildren(createDetailMedia(firstMedia));
+
+      if (firstMedia?.type === 'video') {
+        const video = detailMedia.querySelector('video');
+        const playback = video?.play?.();
+        playback?.catch?.(() => {});
+      }
     }
 
     if (detailTitle) detailTitle.textContent = item.title || '';

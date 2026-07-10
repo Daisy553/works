@@ -21,7 +21,7 @@ assert.strictEqual(
   "github link should point at Daisy's profile"
 );
 assert.ok(
-  DAISY_PORTFOLIO.background.src.endsWith("assets/interior-room-reference.png"),
+  DAISY_PORTFOLIO.background.src.endsWith("assets/interior-room-reference.webp"),
   "background source should point at the room reference asset"
 );
 assert.strictEqual(
@@ -43,6 +43,7 @@ assert.deepStrictEqual(
 const validCategoryIds = new Set(requiredCategories.map(([id]) => id));
 const requiredItemIds = [
   "about-daisy-lab",
+  "trail-effect",
   "snowbreak-production",
   "houdini-procedural-workflow",
   "niagara-vfx-study",
@@ -61,8 +62,8 @@ assert.ok(about, "about-daisy-lab item is required");
 assert.strictEqual(about.title, "智勇");
 assert.strictEqual(about.role, "技术美术（美术向）");
 assert.strictEqual(about.summary, "什么都会一点的菜鸟");
-assert.strictEqual(about.thumbnail, "assets/work/zhiyong-avatar.png");
-assert.strictEqual(about.media[0].src, "assets/work/zhiyong-avatar.png");
+assert.strictEqual(about.thumbnail, "assets/work/zhiyong-avatar.webp");
+assert.strictEqual(about.media[0].src, "assets/work/zhiyong-avatar.webp");
 assert.strictEqual(about.media[0].fit, "contain");
 assert.deepStrictEqual(about.technicalPoints, [
   "爱猫人士",
@@ -103,6 +104,20 @@ assert.strictEqual(
   snowbreakVideo.poster,
   "assets/work/snowbreak-poster.jpg",
   "snowbreak-production video poster should use the expected image"
+);
+
+const trailEffect = DAISY_PORTFOLIO.items.find(({ id }) => id === "trail-effect");
+assert.ok(trailEffect, "trail-effect item is required");
+assert.strictEqual(trailEffect.category, "personal");
+assert.strictEqual(trailEffect.thumbnail, "assets/traileffect/trail-effect-cover.jpg");
+const trailEffectVideo = trailEffect.media.find(
+  (media) => media.type === "video" && media.src === "assets/traileffect/trail-effect-demo.mp4"
+);
+assert.ok(trailEffectVideo, "trail-effect must include the compressed demonstration video");
+assert.strictEqual(
+  trailEffectVideo.poster,
+  "assets/traileffect/trail-effect-cover.jpg",
+  "trail-effect video poster should use the cover image"
 );
 
 console.log("project data contract passed");

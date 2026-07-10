@@ -10,7 +10,7 @@ const requiredHooks = [
   'muted',
   'loop',
   'playsinline',
-  'poster="assets/interior-room-reference.png"',
+  'poster="assets/interior-room-reference.webp"',
   'src="assets/background-loop.webm"',
   'src="assets/background-loop.mp4"',
   'id="pixel-bg"',

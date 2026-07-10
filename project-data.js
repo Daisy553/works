@@ -8,7 +8,7 @@
   root.DAISY_PORTFOLIO = portfolio.DAISY_PORTFOLIO;
 })(typeof globalThis !== "undefined" ? globalThis : this, function () {
   const placeholderImage = "assets/work/snowbreak-poster.jpg";
-  const avatarImage = "assets/work/zhiyong-avatar.png";
+  const avatarImage = "assets/work/zhiyong-avatar.webp";
 
   const DAISY_PORTFOLIO = {
     owner: {
@@ -23,7 +23,7 @@
       },
     },
     background: {
-      src: "assets/interior-room-reference.png",
+      src: "assets/interior-room-reference.webp",
       video: {
         mp4: "assets/background-loop.mp4",
         webm: "assets/background-loop.webm",
@@ -58,6 +58,30 @@
           "爱猫人士",
           "各种奇奇怪怪的想法。",
           "调参大师",
+        ],
+      },
+      {
+        id: "trail-effect",
+        title: "Trail Effect",
+        category: "personal",
+        year: "Now",
+        role: "Technical Artist / C++",
+        summary:
+          "A reusable Unreal Engine trail component that turns motion history into readable realtime ghost trails.",
+        thumbnail: "assets/traileffect/trail-effect-cover.jpg",
+        tags: ["Unreal Engine", "C++", "Realtime VFX"],
+        media: [
+          {
+            type: "video",
+            src: "assets/traileffect/trail-effect-demo.mp4",
+            poster: "assets/traileffect/trail-effect-cover.jpg",
+            alt: "Trail Effect Unreal Engine realtime ghost trail demonstration.",
+          },
+        ],
+        technicalPoints: [
+          "Maintained a reusable ghost pool for history capture and runtime warmup.",
+          "Updated trail history from the actor tick and kept the effect aligned with motion.",
+          "Balanced ghost spacing, readability, and reusable allocations for a lightweight realtime effect.",
         ],
       },
       {
