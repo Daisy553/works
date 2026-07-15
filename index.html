@@ -102,16 +102,52 @@
         Close
       </button>
 
-      <div class="detail-media" data-detail-media></div>
+      <div class="detail-gallery">
+        <div
+          class="detail-media"
+          id="detail-media-stage"
+          data-detail-media
+        ></div>
+      </div>
 
       <div class="detail-copy">
         <p class="detail-kicker" data-detail-kicker></p>
         <h2 id="detail-title" data-detail-title></h2>
-        <p class="detail-summary" data-detail-summary></p>
-        <p class="detail-role" data-detail-role></p>
+
+        <section class="detail-copy-section" aria-labelledby="detail-overview-label">
+          <p class="detail-section-label" id="detail-overview-label">项目概述</p>
+          <p class="detail-summary" data-detail-summary></p>
+        </section>
+
+        <section class="detail-copy-section" aria-labelledby="detail-role-label">
+          <p class="detail-section-label" id="detail-role-label">我的职责</p>
+          <p class="detail-role" data-detail-role></p>
+        </section>
+
         <ul class="detail-tags" data-detail-tags></ul>
-        <ul class="detail-points" data-detail-points></ul>
+
+        <section class="detail-copy-section" aria-labelledby="detail-process-label">
+          <p class="detail-section-label" id="detail-process-label">设计要点</p>
+          <ul class="detail-points" data-detail-points></ul>
+        </section>
       </div>
+
+      <section class="detail-evidence" data-detail-evidence hidden aria-labelledby="detail-evidence-title">
+        <div class="detail-evidence-heading">
+          <p class="detail-section-label">技术拆解</p>
+          <h3 id="detail-evidence-title">从采样到残影复用</h3>
+        </div>
+
+        <div class="detail-breakdown" data-detail-breakdown></div>
+
+        <section class="detail-code-section" data-detail-code-section aria-labelledby="detail-code-title">
+          <div class="detail-code-heading">
+            <p class="detail-section-label">关键实现</p>
+            <h3 id="detail-code-title">采样、缓冲与对象池</h3>
+          </div>
+          <div class="detail-code-list" data-detail-code></div>
+        </section>
+      </section>
     </div>
   </section>
 

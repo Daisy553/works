@@ -109,6 +109,9 @@ assert.strictEqual(
 const trailEffect = DAISY_PORTFOLIO.items.find(({ id }) => id === "trail-effect");
 assert.ok(trailEffect, "trail-effect item is required");
 assert.strictEqual(trailEffect.category, "personal");
+assert.strictEqual(trailEffect.year, "当前");
+assert.strictEqual(trailEffect.role, "技术美术 / C++");
+assert.ok(trailEffect.summary.includes("角色残影组件"), "trail-effect summary should use concise Chinese copy");
 assert.strictEqual(trailEffect.thumbnail, "assets/traileffect/trail-effect-cover.jpg");
 const trailEffectVideo = trailEffect.media.find(
   (media) => media.type === "video" && media.src === "assets/traileffect/trail-effect-demo.mp4"
@@ -118,6 +121,22 @@ assert.strictEqual(
   trailEffectVideo.poster,
   "assets/traileffect/trail-effect-cover.jpg",
   "trail-effect video poster should use the cover image"
+);
+assert.strictEqual(trailEffect.media.length, 1, "trail-effect should keep the demo video as its only primary media");
+assert.strictEqual(trailEffect.media[0].type, "video", "trail-effect primary media should be the demo video");
+assert.strictEqual(trailEffect.breakdown.length, 3, "trail-effect should explain the technical flow in three steps");
+assert.deepStrictEqual(
+  trailEffect.codeSamples.map(({ file }) => file),
+  [
+    "Private/Components/TrailEffectComponent.cpp",
+    "Private/Components/TrailEffectComponent.cpp",
+    "Private/Ghost/TrailGhostPool.cpp",
+  ],
+  "trail-effect code samples should reference the real plugin source files"
+);
+assert.ok(
+  trailEffect.codeSamples.every(({ code }) => code.includes("//")),
+  "trail-effect code samples should include concise Chinese annotations"
 );
 
 console.log("project data contract passed");

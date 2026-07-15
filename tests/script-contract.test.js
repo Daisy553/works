@@ -35,6 +35,15 @@ const requiredSnippets = [
   'directorySwitchTimer',
   'is-moving-next',
   'is-feedback',
+  'renderPrimaryDetailMedia',
+  'renderDetailEvidence',
+  'createCodeSample',
+  'detail-code-sample',
+  'is-category-linking',
+  'touchstart',
+  'touchend',
+  'backgroundDriftTargetX',
+  'setBackgroundDriftTarget',
 ];
 
 for (const snippet of requiredSnippets) {
