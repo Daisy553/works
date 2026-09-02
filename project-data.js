@@ -7,7 +7,7 @@
 
   root.DAISY_PORTFOLIO = portfolio.DAISY_PORTFOLIO;
 })(typeof globalThis !== "undefined" ? globalThis : this, function () {
-  const placeholderImage = "assets/work/snowbreak-poster.jpg";
+  const placeholderImage = "assets/interior-room-reference.webp";
   const avatarImage = "assets/work/zhiyong-avatar.webp";
 
   const DAISY_PORTFOLIO = {
@@ -193,30 +193,6 @@ void UTrailGhostPool::Release(ATrailGhostActor* Ghost)
     FreeList.Add(Ghost);
 }`,
           },
-        ],
-      },
-      {
-        id: "snowbreak-production",
-        title: "Snowbreak Production Effects",
-        category: "commercial",
-        year: "2025",
-        role: "Technical Artist",
-        summary:
-          "Production-facing realtime VFX work for high-readability combat moments, balancing authored timing with engine constraints.",
-        thumbnail: placeholderImage,
-        tags: ["Realtime VFX", "Production", "Optimization"],
-        media: [
-          {
-            type: "video",
-            src: "assets/work/snowbreak-reel.mp4",
-            poster: placeholderImage,
-            alt: "Snowbreak realtime effects production reel.",
-          },
-        ],
-        technicalPoints: [
-          "Tuned particle timing and material response for clear player feedback.",
-          "Balanced overdraw, texture usage, and spawn density for runtime performance.",
-          "Prepared reusable effect setups that could be iterated quickly with art direction.",
         ],
       },
       {

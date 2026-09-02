@@ -44,7 +44,6 @@ const validCategoryIds = new Set(requiredCategories.map(([id]) => id));
 const requiredItemIds = [
   "about-daisy-lab",
   "trail-effect",
-  "snowbreak-production",
   "houdini-procedural-workflow",
   "niagara-vfx-study",
   "water-lookdev",
@@ -93,17 +92,13 @@ for (const item of DAISY_PORTFOLIO.items) {
 }
 
 assert.ok(hasVideo, "at least one item must include video media");
-
-const snowbreak = DAISY_PORTFOLIO.items.find(({ id }) => id === "snowbreak-production");
-assert.ok(snowbreak, "snowbreak-production item is required");
-const snowbreakVideo = snowbreak.media.find(
-  (media) => media.type === "video" && media.src === "assets/work/snowbreak-reel.mp4"
+assert.ok(
+  !DAISY_PORTFOLIO.items.some(({ id }) => id === "snowbreak-production"),
+  "snowbreak-production should stay off the personal homepage"
 );
-assert.ok(snowbreakVideo, "snowbreak-production must include the production video media");
-assert.strictEqual(
-  snowbreakVideo.poster,
-  "assets/work/snowbreak-poster.jpg",
-  "snowbreak-production video poster should use the expected image"
+assert.ok(
+  !JSON.stringify(DAISY_PORTFOLIO.items).includes("snowbreak"),
+  "portfolio items should not reference snowbreak assets or copy"
 );
 
 const trailEffect = DAISY_PORTFOLIO.items.find(({ id }) => id === "trail-effect");

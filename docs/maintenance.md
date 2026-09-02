@@ -16,7 +16,7 @@ This repository is a static personal portfolio, not a marketing landing page. Th
 
 - Store site background assets under `assets/`.
 - Store project thumbnails, posters, and reels under `assets/work/`.
-- Use descriptive asset names, for example `snowbreak-reel.mp4` and `snowbreak-poster.jpg`.
+- Use descriptive asset names, for example `trail-effect-demo.mp4` and `trail-effect-cover.jpg`.
 - Keep large videos compressed for web preview. Prefer a short reel or poster image over raw capture files.
 - Animated background work should use prepared `mp4/webm` cinemagraph assets with a static poster fallback, not ad hoc full-screen distortion effects.
 
