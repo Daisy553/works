@@ -91,6 +91,18 @@
         removeEventListener() {},
       };
 
+  function sitePath(src) {
+    if (typeof src !== 'string' || src.length === 0) {
+      return '';
+    }
+
+    if (/^(?:[a-z][a-z\d+.-]*:|\/|#)/i.test(src)) {
+      return src;
+    }
+
+    return `/${src.replace(/^\.\//, '')}`;
+  }
+
   function getItems() {
     return stateApi.getCategoryItems(portfolio, appState.categoryId);
   }
@@ -276,7 +288,7 @@
     card.setAttribute('role', 'button');
     card.setAttribute('aria-label', `${item.title}, ${position === 'active' ? 'open detail' : 'select work'}`);
 
-    image.src = item.thumbnail;
+    image.src = sitePath(item.thumbnail);
     image.alt = item.title;
     image.loading = position === 'active' ? 'eager' : 'lazy';
 
@@ -407,8 +419,8 @@
 
     if (media.type === 'video') {
       const video = document.createElement('video');
-      video.src = media.src;
-      video.poster = media.poster || '';
+      video.src = sitePath(media.src);
+      video.poster = sitePath(media.poster || '');
       video.controls = true;
       video.autoplay = true;
       video.muted = true;
@@ -419,7 +431,7 @@
     }
 
     const image = document.createElement('img');
-    image.src = media.src;
+    image.src = sitePath(media.src);
     image.alt = media.alt || 'Project image';
     if (media.fit === 'contain') {
       image.classList.add('is-contain');
@@ -609,6 +621,12 @@
       shell.inert = true;
     }
 
+    document.querySelectorAll('.room-nav, .skip-link').forEach((element) => {
+      if ('inert' in element) {
+        element.inert = true;
+      }
+    });
+
     moveFocusIntoDetail();
   }
 
@@ -626,6 +644,12 @@
     if (shell && 'inert' in shell) {
       shell.inert = false;
     }
+
+    document.querySelectorAll('.room-nav, .skip-link').forEach((element) => {
+      if ('inert' in element) {
+        element.inert = false;
+      }
+    });
 
     restorePreviousFocus();
   }
@@ -684,7 +708,7 @@
   }
 
   function isForegroundTarget(target) {
-    return target instanceof Element && Boolean(target.closest('.identity-panel, .album-stage, .directory, .detail-view.is-open'));
+    return target instanceof Element && Boolean(target.closest('.identity-panel, .album-stage, .directory, .detail-view.is-open, .sheet, .room-nav, .skip-link'));
   }
 
   function updateBackgroundDrift(event) {
@@ -1045,7 +1069,7 @@
           drawBackground(0);
         }
       };
-      backgroundImage.src = portfolio.background.src;
+      backgroundImage.src = sitePath(portfolio.background.src);
     }
 
     startBackground();

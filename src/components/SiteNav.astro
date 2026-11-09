@@ -1,0 +1,37 @@
+---
+const path = Astro.url.pathname;
+
+function current(href: string) {
+  if (href === '/') {
+    return path === '/';
+  }
+
+  return path === href || path.startsWith(href);
+}
+
+const links = [
+  { href: '/', label: '首页' },
+  { href: '/notes/', label: '笔记' },
+  { href: '/works/', label: '作品' },
+  { href: '/tags/', label: '标签' },
+  { href: '/rss.xml', label: 'RSS' },
+];
+---
+
+<nav class="room-nav" aria-label="站点">
+  <a class="nav-mark" href="/" aria-current={current('/') ? 'page' : undefined}>Daisy Lab</a>
+  <ul class="nav-links">
+    {
+      links.slice(1).map((link) => (
+        <li>
+          <a
+            href={link.href}
+            aria-current={link.href === '/rss.xml' ? undefined : current(link.href) ? 'page' : undefined}
+          >
+            {link.label}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>

@@ -1,0 +1,32 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Colophon from '../../components/Colophon.astro';
+import PostList from '../../components/PostList.astro';
+import { groupPosts, publishedPosts } from '../../lib/posts.mjs';
+import { archiveDescription } from '../../lib/site.mjs';
+
+const posts = publishedPosts(await getCollection('posts'));
+const groups = groupPosts(posts);
+const description = 'Daisy Lab 的笔记列表，文章来自档案里已有的条目文字。';
+---
+
+<Base title="笔记" description={description} bodyClass="is-reading">
+  <main class="archive-shell sheet" id="content">
+    <div class="sheet-mark" aria-hidden="true"></div>
+    <p class="eyebrow">Notes</p>
+    <h1>笔记</h1>
+    <p class="sheet-intro">{archiveDescription}</p>
+    {
+      groups.map(([category, entries], index) => (
+        <section class="section-block" aria-labelledby={`note-group-${index}`}>
+          <p class="eyebrow group-label" id={`note-group-${index}`}>
+            {category}
+          </p>
+          <PostList posts={entries} />
+        </section>
+      ))
+    }
+    <Colophon />
+  </main>
+</Base>

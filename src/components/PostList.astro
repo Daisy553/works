@@ -1,0 +1,42 @@
+---
+import { formatPostDate, postDateTime, readingMinutesFor } from '../lib/posts.mjs';
+
+interface Props {
+  posts: Array<{
+    id: string;
+    body?: string;
+    data: {
+      title: string;
+      description: string;
+      date: Date;
+      dateLabel?: string;
+      category: string;
+      sort?: number;
+      draft?: boolean;
+    };
+  }>;
+  lead?: boolean;
+}
+
+const { posts, lead = false } = Astro.props;
+---
+
+<ol class="post-list">
+  {
+    posts.map((post, index) => (
+      <li>
+        <a class:list={['post-entry', { 'is-lead': lead && index === 0 }]} href={`/notes/${post.id}/`}>
+          <p class="post-meta">
+            <time datetime={postDateTime(post)}>{formatPostDate(post)}</time>
+            <span aria-hidden="true">·</span>
+            <span>约 {readingMinutesFor(post)} 分钟</span>
+            <span aria-hidden="true">·</span>
+            <span>{post.data.category}</span>
+          </p>
+          <h2>{post.data.title}</h2>
+          <p class="post-dek">{post.data.description}</p>
+        </a>
+      </li>
+    ))
+  }
+</ol>

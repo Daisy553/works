@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro';
+import IdentityPanel from '../components/IdentityPanel.astro';
+import PostList from '../components/PostList.astro';
+import { loadPortfolio } from '../lib/portfolio.mjs';
+import { publishedPosts } from '../lib/posts.mjs';
+import { archiveDescription } from '../lib/site.mjs';
+import { getCollection } from 'astro:content';
+
+const portfolio = loadPortfolio();
+const posts = publishedPosts(await getCollection('posts'));
+const categoryLabel = new Map(portfolio.categories.map((category) => [category.id, category.label]));
+---
+
+<Base title="Daisy Lab" description={archiveDescription} bodyClass="is-home">
+  <main class="home-shell" id="content">
+    <IdentityPanel />
+    <div class="sheet home-sheet">
+      <div class="sheet-mark" aria-hidden="true"></div>
+      <p class="sheet-intro">{archiveDescription}</p>
+
+      <section class="section-block" aria-labelledby="notes-heading">
+        <p class="eyebrow" id="notes-heading">笔记 / Notes</p>
+        <PostList posts={posts} lead />
+        <a class="archive-link" href="/notes/">全部笔记</a>
+      </section>
+
+      <section class="section-block" aria-labelledby="works-heading">
+        <p class="eyebrow" id="works-heading">作品 / Works</p>
+        <ul class="works-index">
+          {
+            portfolio.items.map((item) => (
+              <li>
+                <span>{item.title}</span>
+                <span class="works-meta">{categoryLabel.get(item.category) || item.category}</span>
+              </li>
+            ))
+          }
+        </ul>
+        <a class="archive-link" href="/works/">进入作品档案</a>
+      </section>
+    </div>
+  </main>
+</Base>

@@ -2,7 +2,7 @@ const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
 
-const script = fs.readFileSync(path.join(__dirname, '..', 'script.js'), 'utf8');
+const script = fs.readFileSync(path.join(__dirname, '..', 'public', 'script.js'), 'utf8');
 
 const requiredSnippets = [
   '#room-bg-video',
@@ -44,6 +44,8 @@ const requiredSnippets = [
   'touchend',
   'backgroundDriftTargetX',
   'setBackgroundDriftTarget',
+  'sitePath',
+  '.sheet',
 ];
 
 for (const snippet of requiredSnippets) {

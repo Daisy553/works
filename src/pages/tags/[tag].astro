@@ -1,0 +1,36 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Colophon from '../../components/Colophon.astro';
+import PostList from '../../components/PostList.astro';
+import { collectTags, publishedPosts } from '../../lib/posts.mjs';
+
+export async function getStaticPaths() {
+  const tags = collectTags(publishedPosts(await getCollection('posts')));
+
+  return tags.map((entry) => ({
+    params: { tag: entry.slug },
+  }));
+}
+
+const posts = publishedPosts(await getCollection('posts'));
+const match = collectTags(posts).find((entry) => entry.slug === Astro.params.tag);
+
+if (!match) {
+  throw new Error(`Missing tag: ${Astro.params.tag}`);
+}
+
+const description = `标签「${match.tag}」下的 Daisy Lab 笔记。`;
+---
+
+<Base title={match.tag} description={description} bodyClass="is-reading">
+  <main class="archive-shell sheet" id="content">
+    <div class="sheet-mark" aria-hidden="true"></div>
+    <p class="eyebrow">Tag</p>
+    <h1>{match.tag}</h1>
+    <p class="sheet-intro">{match.posts.length} 篇</p>
+    <PostList posts={match.posts} />
+    <a class="archive-link" href="/tags/">全部标签</a>
+    <Colophon />
+  </main>
+</Base>

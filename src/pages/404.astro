@@ -1,0 +1,17 @@
+---
+import Base from '../layouts/Base.astro';
+import Colophon from '../components/Colophon.astro';
+
+const description = '这个地址没有对应的 Daisy Lab 页面。';
+---
+
+<Base title="未找到" description={description} bodyClass="is-reading">
+  <main class="archive-shell sheet" id="content">
+    <div class="sheet-mark" aria-hidden="true"></div>
+    <p class="eyebrow">404</p>
+    <h1>这一页不在档案里</h1>
+    <p class="missing-copy">地址没有对应的笔记或作品。</p>
+    <a class="archive-link" href="/">回到首页</a>
+    <Colophon />
+  </main>
+</Base>
