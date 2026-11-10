@@ -7,7 +7,7 @@ tags:
   - Unreal Engine
   - C++
   - 实时特效
-category: 作品 / Works
+category: 作品
 lang: zh
 image: /assets/traileffect/trail-effect-cover.jpg
 imageAlt: Trail Effect 在 Unreal Engine 中生成角色实时残影的演示。

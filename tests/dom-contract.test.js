@@ -5,7 +5,8 @@ const path = require('path');
 const root = path.join(__dirname, '..');
 const base = fs.readFileSync(path.join(root, 'src', 'layouts', 'Base.astro'), 'utf8');
 const works = fs.readFileSync(path.join(root, 'src', 'pages', 'works.astro'), 'utf8');
-const identity = fs.readFileSync(path.join(root, 'src', 'components', 'IdentityPanel.astro'), 'utf8');
+const about = fs.readFileSync(path.join(root, 'src', 'pages', 'about.astro'), 'utf8');
+const footer = fs.readFileSync(path.join(root, 'src', 'components', 'SiteFooter.astro'), 'utf8');
 const html = `${base}\n${works}`;
 
 const requiredHooks = [
@@ -65,8 +66,14 @@ assert.ok(
   'scripts should load in project-data, portfolio-state, script order',
 );
 
-assert.ok(identity.includes('bigorangeyong@gmail.com'), 'identity panel should keep the owner email');
-assert.ok(identity.includes('18747442595'), 'identity panel should keep the owner phone');
-assert.ok(works.includes('IdentityPanel'), 'works page should keep the identity panel');
+assert.ok(about.includes('email'), 'about page should render the owner email');
+assert.ok(!about.includes('phone'), 'about page should not render a phone number');
+assert.ok(about.includes('links.bilibili'), 'about page should link Bilibili from the portfolio data');
+assert.ok(about.includes('links.github'), 'about page should link GitHub from the portfolio data');
+assert.ok(about.includes('loadPortfolio'), 'about page should read contact details from portfolio data');
+assert.ok(footer.includes('links.github'), 'footer should link GitHub from the portfolio data');
+assert.ok(footer.includes('links.bilibili'), 'footer should link Bilibili from the portfolio data');
+assert.ok(!works.includes('主页待补充'), 'works page should not keep the placeholder contact');
+assert.ok(!about.includes('主页入口'), 'about page should not use the placeholder link label');
 
 console.log('dom contract passed');

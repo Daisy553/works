@@ -99,6 +99,30 @@ export function collectTags(posts) {
   return [...tags.values()].sort((a, b) => a.tag.localeCompare(b.tag, 'zh-CN'));
 }
 
+export function archiveGroup(post) {
+  if (post.data.dateLabel) {
+    return post.data.dateLabel;
+  }
+
+  return String(post.data.date.getUTCFullYear());
+}
+
+export function groupByArchive(posts) {
+  const groups = new Map();
+
+  for (const post of posts) {
+    const label = archiveGroup(post);
+
+    if (!groups.has(label)) {
+      groups.set(label, []);
+    }
+
+    groups.get(label).push(post);
+  }
+
+  return [...groups.entries()];
+}
+
 export function groupPosts(posts) {
   const groups = new Map();
 

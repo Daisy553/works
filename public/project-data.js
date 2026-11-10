@@ -16,7 +16,6 @@
       title: "Technical Artist / Realtime Visual Maker",
       summary: "一些有用无用的想法。",
       email: "bigorangeyong@gmail.com",
-      phone: "18747442595",
       links: {
         bilibili: "https://space.bilibili.com/3247232?spm_id_from=333.1007.0.0",
         github: "https://github.com/Daisy553",
@@ -31,10 +30,10 @@
       alt: "Pixel-art inspired interior room reference with warm practical light and portfolio desk details.",
     },
     categories: [
-      { id: "about", label: "关于我 / About" },
-      { id: "personal", label: "作品 / Works" },
-      { id: "breakdown", label: "分享 / Share" },
-      { id: "commercial", label: "商业项目 / Commercial" },
+      { id: "about", label: "关于我" },
+      { id: "personal", label: "作品" },
+      { id: "breakdown", label: "分享" },
+      { id: "commercial", label: "商业项目" },
     ],
     items: [
       {

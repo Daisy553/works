@@ -7,10 +7,8 @@ tags:
   - Houdini
   - Procedural
   - Tool Design
-category: 分享 / Share
+category: 分享
 lang: en
-image: /assets/interior-room-reference.webp
-imageAlt: Placeholder preview for Houdini procedural workflow research.
 sample: true
 sort: 20
 sourceItem: houdini-procedural-workflow
@@ -21,11 +19,6 @@ sourceItem: houdini-procedural-workflow
 Technical Artist / Procedural Tooling
 
 A procedural study for generating reusable environment and effect-support assets with predictable art controls.
-
-<figure>
-  <img src="/assets/interior-room-reference.webp" alt="Placeholder preview for Houdini procedural workflow research." />
-  <figcaption>Placeholder preview for Houdini procedural workflow research.</figcaption>
-</figure>
 
 ## Parameterized controls
 

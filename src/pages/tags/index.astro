@@ -1,19 +1,18 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import Colophon from '../../components/Colophon.astro';
 import { collectTags, publishedPosts } from '../../lib/posts.mjs';
 
 const tags = collectTags(publishedPosts(await getCollection('posts')));
-const description = 'Daisy Lab 笔记的标签归档。';
+const description = 'Daisy Lab 文章的标签。';
 ---
 
-<Base title="标签" description={description} bodyClass="is-reading">
-  <main class="archive-shell sheet" id="content">
-    <div class="sheet-mark" aria-hidden="true"></div>
-    <p class="eyebrow">Tags</p>
-    <h1>标签</h1>
-    <p class="sheet-intro">按标签回看笔记。标签来自各篇文首，不另起一套分类。</p>
+<Base title="标签" description={description} bodyClass="is-page">
+  <main class="blog-column" id="content">
+    <header class="page-head">
+      <h1>标签</h1>
+      <p class="page-intro">按标签回看文章。</p>
+    </header>
     <ul class="tag-index">
       {
         tags.map((entry) => (
@@ -26,6 +25,5 @@ const description = 'Daisy Lab 笔记的标签归档。';
         ))
       }
     </ul>
-    <Colophon />
   </main>
 </Base>

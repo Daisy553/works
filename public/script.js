@@ -143,12 +143,18 @@
     }
   }
 
+  function visibleCategories() {
+    return (portfolio.categories || []).filter((category) => category.id !== 'about');
+  }
+
   function renderNavigation() {
-    if (!categoryNav || !Array.isArray(portfolio.categories)) {
+    const categories = visibleCategories();
+
+    if (!categoryNav || categories.length === 0) {
       return;
     }
 
-    const buttons = portfolio.categories.map((category, index) => {
+    const buttons = categories.map((category, index) => {
       const button = document.createElement('button');
       const isActive = category.id === appState.categoryId;
       const itemCount = stateApi.getCategoryItems(portfolio, category.id).length;
@@ -161,7 +167,7 @@
 
       button.className = `directory-button${isActive ? ' is-active' : ''}${isFeedback ? ' is-feedback' : ''}`;
       button.dataset.categoryId = category.id;
-      button.setAttribute('aria-label', `${category.label}, ${itemCount} ${itemCount === 1 ? 'work' : 'works'}`);
+      button.setAttribute('aria-label', `${category.label}，${itemCount} 件`);
       button.setAttribute('aria-pressed', String(isActive));
       button.setAttribute('data-index', directoryIndex);
       if (isActive) {
@@ -286,7 +292,7 @@
     card.className = `album-card is-${position}`;
     card.tabIndex = position === 'hidden' ? -1 : 0;
     card.setAttribute('role', 'button');
-    card.setAttribute('aria-label', `${item.title}, ${position === 'active' ? 'open detail' : 'select work'}`);
+    card.setAttribute('aria-label', `${item.title}，${position === 'active' ? '打开详情' : '选中作品'}`);
 
     image.src = sitePath(item.thumbnail);
     image.alt = item.title;
@@ -296,7 +302,7 @@
     title.textContent = item.title;
     meta.textContent = [item.year, item.role].filter(Boolean).join(' / ');
     action.className = 'album-action';
-    action.textContent = position === 'active' ? 'View Case' : 'Bring Forward';
+    action.textContent = position === 'active' ? '查看' : '翻到前面';
 
     caption.append(title, meta, action);
     card.append(image, caption);
@@ -338,7 +344,7 @@
     if (items.length === 0) {
       const empty = document.createElement('p');
       empty.className = 'album-empty';
-      empty.textContent = 'No works in this category yet.';
+      empty.textContent = '这个分类还没有作品。';
       finishAlbumRender([empty], direction);
       return;
     }
@@ -1056,6 +1062,12 @@
   }
 
   function init() {
+    const firstVisible = visibleCategories()[0];
+
+    if (firstVisible) {
+      appState.categoryId = firstVisible.id;
+    }
+
     renderNavigation();
     renderAlbum();
     bindEvents();

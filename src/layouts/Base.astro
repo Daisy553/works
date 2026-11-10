@@ -1,7 +1,8 @@
 ---
 import '../styles/site.css';
 import SiteNav from '../components/SiteNav.astro';
-import { absoluteUrl, archiveDescription, canonicalPath, defaultImage, defaultImageAlt } from '../lib/site.mjs';
+import SiteFooter from '../components/SiteFooter.astro';
+import { absoluteUrl, canonicalPath, defaultImage, defaultImageAlt, siteDescription } from '../lib/site.mjs';
 
 interface Props {
   title?: string;
@@ -16,7 +17,7 @@ interface Props {
 
 const {
   title = 'Daisy Lab',
-  description = archiveDescription,
+  description = siteDescription,
   image = defaultImage,
   imageAlt = defaultImageAlt,
   type = 'website',
@@ -85,6 +86,7 @@ const feed = new URL('/rss.xml', site).href;
     <canvas id="pixel-bg" aria-hidden="true"></canvas>
     {showNav && <SiteNav />}
     <slot />
+    <SiteFooter />
     <script is:inline src="/project-data.js"></script>
     <script is:inline src="/portfolio-state.js"></script>
     <script is:inline src="/script.js"></script>

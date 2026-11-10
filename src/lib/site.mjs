@@ -1,4 +1,8 @@
-export const archiveDescription = 'Daisy Lab 的私人作品档案，整理技术美术、实时特效、程序化流程与项目复盘。';
+export const siteTagline = '一些有用无用的想法。';
+
+export const siteDescription = 'Daisy Lab。一些有用无用的想法。';
+
+export const archiveDescription = siteDescription;
 
 export const defaultImage = '/assets/interior-room-reference.webp';
 

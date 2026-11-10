@@ -1,12 +1,16 @@
 ---
 import Base from '../layouts/Base.astro';
-import IdentityPanel from '../components/IdentityPanel.astro';
-import { archiveDescription } from '../lib/site.mjs';
+import { siteTagline } from '../lib/site.mjs';
 ---
 
-<Base title="作品" description={archiveDescription} bodyClass="is-works">
+<Base title="作品" description={`Daisy Lab 的作品。${siteTagline}`} bodyClass="is-works">
   <main class="portfolio-shell" id="content" data-portfolio-shell>
-    <IdentityPanel />
+    <header class="identity-panel" aria-label="作品">
+      <p class="eyebrow">作品</p>
+      <h1>Daisy Lab</h1>
+      <p>{siteTagline}</p>
+      <a class="contact-link" href="/">回到文章</a>
+    </header>
 
     <section class="album-stage" aria-label="桌面作品档案">
       <div class="album-track" data-album-track aria-live="polite"></div>

@@ -1,44 +1,51 @@
 ---
-import Base from '../layouts/Base.astro';
-import IdentityPanel from '../components/IdentityPanel.astro';
-import PostList from '../components/PostList.astro';
-import { loadPortfolio } from '../lib/portfolio.mjs';
-import { publishedPosts } from '../lib/posts.mjs';
-import { archiveDescription } from '../lib/site.mjs';
 import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import PostList from '../components/PostList.astro';
+import { formatPostDate, postDateTime, publishedPosts, readingMinutesFor } from '../lib/posts.mjs';
+import { siteDescription, siteTagline } from '../lib/site.mjs';
 
-const portfolio = loadPortfolio();
 const posts = publishedPosts(await getCollection('posts'));
-const categoryLabel = new Map(portfolio.categories.map((category) => [category.id, category.label]));
+const [feature, ...rest] = posts;
 ---
 
-<Base title="Daisy Lab" description={archiveDescription} bodyClass="is-home">
-  <main class="home-shell" id="content">
-    <IdentityPanel />
-    <div class="sheet home-sheet">
-      <div class="sheet-mark" aria-hidden="true"></div>
-      <p class="sheet-intro">{archiveDescription}</p>
+<Base title="Daisy Lab" description={siteDescription} bodyClass="is-home">
+  <main class="blog-column" id="content">
+    <header class="mast">
+      <img src="/assets/work/zhiyong-avatar.webp" width="64" height="64" alt="智勇" />
+      <div>
+        <h1>Daisy Lab</h1>
+        <p>{siteTagline}</p>
+      </div>
+    </header>
 
-      <section class="section-block" aria-labelledby="notes-heading">
-        <p class="eyebrow" id="notes-heading">笔记 / Notes</p>
-        <PostList posts={posts} lead />
-        <a class="archive-link" href="/notes/">全部笔记</a>
-      </section>
+    {
+      feature && (
+        <a class="feature-card" href={`/notes/${feature.id}/`}>
+          {feature.data.image ? (
+            <img src={feature.data.image} alt={feature.data.imageAlt || ''} />
+          ) : (
+            <span class="feature-fallback" aria-hidden="true"></span>
+          )}
+          <span class="feature-copy">
+            <p class="post-meta">
+              <time datetime={postDateTime(feature)}>{formatPostDate(feature)}</time>
+              <span>{feature.data.category}</span>
+              <span>约 {readingMinutesFor(feature)} 分钟</span>
+            </p>
+            <h2>{feature.data.title}</h2>
+            <p>{feature.data.description}</p>
+            <p class="post-meta">
+              {feature.data.tags.map((tag) => (
+                <span>{tag}</span>
+              ))}
+            </p>
+          </span>
+        </a>
+      )
+    }
 
-      <section class="section-block" aria-labelledby="works-heading">
-        <p class="eyebrow" id="works-heading">作品 / Works</p>
-        <ul class="works-index">
-          {
-            portfolio.items.map((item) => (
-              <li>
-                <span>{item.title}</span>
-                <span class="works-meta">{categoryLabel.get(item.category) || item.category}</span>
-              </li>
-            ))
-          }
-        </ul>
-        <a class="archive-link" href="/works/">进入作品档案</a>
-      </section>
-    </div>
+    {rest.length > 0 && <PostList posts={rest} />}
+    <a class="more-link" href="/notes/">更多文章</a>
   </main>
 </Base>

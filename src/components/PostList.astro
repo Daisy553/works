@@ -11,30 +11,42 @@ interface Props {
       date: Date;
       dateLabel?: string;
       category: string;
-      sort?: number;
-      draft?: boolean;
+      tags: string[];
+      image?: string;
+      imageAlt?: string;
     };
   }>;
-  lead?: boolean;
 }
 
-const { posts, lead = false } = Astro.props;
+const { posts } = Astro.props;
 ---
 
-<ol class="post-list">
+<ol class="feed">
   {
-    posts.map((post, index) => (
+    posts.map((post) => (
       <li>
-        <a class:list={['post-entry', { 'is-lead': lead && index === 0 }]} href={`/notes/${post.id}/`}>
-          <p class="post-meta">
-            <time datetime={postDateTime(post)}>{formatPostDate(post)}</time>
-            <span aria-hidden="true">·</span>
-            <span>约 {readingMinutesFor(post)} 分钟</span>
-            <span aria-hidden="true">·</span>
-            <span>{post.data.category}</span>
-          </p>
-          <h2>{post.data.title}</h2>
-          <p class="post-dek">{post.data.description}</p>
+        <a class="feed-item" href={`/notes/${post.id}/`}>
+          <span class="feed-thumb" aria-hidden="true">
+            {post.data.image ? (
+              <img src={post.data.image} alt="" />
+            ) : (
+              <span class="cover-fallback"></span>
+            )}
+          </span>
+          <span class="feed-copy">
+            <p class="post-meta">
+              <time datetime={postDateTime(post)}>{formatPostDate(post)}</time>
+              <span>{post.data.category}</span>
+              <span>约 {readingMinutesFor(post)} 分钟</span>
+            </p>
+            <h2>{post.data.title}</h2>
+            <p class="feed-dek">{post.data.description}</p>
+            <p class="post-meta">
+              {post.data.tags.map((tag) => (
+                <span>{tag}</span>
+              ))}
+            </p>
+          </span>
         </a>
       </li>
     ))

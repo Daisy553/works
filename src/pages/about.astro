@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro';
+import { loadPortfolio } from '../lib/portfolio.mjs';
+import { siteTagline } from '../lib/site.mjs';
+
+const portfolio = loadPortfolio();
+const about = portfolio.items.find((item) => item.id === 'about-daisy-lab');
+const { email, links } = portfolio.owner;
+const description = `${about?.title || '智勇'}。${siteTagline}`;
+---
+
+<Base title="关于" description={description} image="/assets/work/zhiyong-avatar.webp" imageAlt="智勇" bodyClass="is-page">
+  <main class="blog-column" id="content">
+    <article class="about-layout">
+      <img class="about-portrait" src="/assets/work/zhiyong-avatar.webp" width="168" height="168" alt="智勇" />
+      <div class="about-copy">
+        <h1>{about?.title}</h1>
+        <p class="lede">{siteTagline}</p>
+        <div class="prose">
+          <p>{about?.role}。{about?.summary}。</p>
+          <p>{about?.technicalPoints?.[0]}，{about?.technicalPoints?.[2]}。{about?.technicalPoints?.[1]}</p>
+        </div>
+        <ul class="about-links">
+          <li>
+            <a href={`mailto:${email}`}>{email}</a>
+          </li>
+          <li>
+            <a href={links.bilibili} target="_blank" rel="noopener noreferrer">Bilibili</a>
+          </li>
+          <li>
+            <a href={links.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+          </li>
+        </ul>
+      </div>
+    </article>
+  </main>
+</Base>

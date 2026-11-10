@@ -1,33 +1,23 @@
 ---
 const path = Astro.url.pathname;
 
-function current(href: string) {
-  if (href === '/') {
-    return path === '/';
-  }
-
-  return path === href || path.startsWith(href);
-}
-
 const links = [
-  { href: '/', label: '首页' },
-  { href: '/notes/', label: '笔记' },
-  { href: '/works/', label: '作品' },
-  { href: '/tags/', label: '标签' },
-  { href: '/rss.xml', label: 'RSS' },
+  { href: '/', label: '文章', current: path === '/' || path.startsWith('/notes/') },
+  { href: '/archive/', label: '归档', current: path.startsWith('/archive/') },
+  { href: '/tags/', label: '标签', current: path.startsWith('/tags/') },
+  { href: '/about/', label: '关于', current: path.startsWith('/about/') },
+  { href: '/rss.xml', label: 'RSS', current: false },
+  { href: '/works/', label: '作品', current: path.startsWith('/works/') },
 ];
 ---
 
 <nav class="room-nav" aria-label="站点">
-  <a class="nav-mark" href="/" aria-current={current('/') ? 'page' : undefined}>Daisy Lab</a>
+  <a class="nav-mark" href="/">Daisy Lab</a>
   <ul class="nav-links">
     {
-      links.slice(1).map((link) => (
+      links.map((link) => (
         <li>
-          <a
-            href={link.href}
-            aria-current={link.href === '/rss.xml' ? undefined : current(link.href) ? 'page' : undefined}
-          >
+          <a href={link.href} aria-current={link.current ? 'page' : undefined}>
             {link.label}
           </a>
         </li>

@@ -1,6 +1,6 @@
 # Daisy Lab
 
-Personal site for Daisy Lab：一间还是原来那间房间的笔记，作品档案留在里面。
+Personal blog for Daisy Lab. The homepage is the article stream. The works album stays at `/works/`.
 
 The blog is an [Astro](https://astro.build) static site. Notes are Markdown files. The album, categories, and detail view are still the portfolio runtime (`public/project-data.js`, `public/portfolio-state.js`, `public/script.js`, `public/styles.css`). Astro is a small static generator: one person can add a note by adding one Markdown file, and Cloudflare Pages only needs the built `dist/` folder.
 

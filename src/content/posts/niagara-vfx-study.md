@@ -7,10 +7,8 @@ tags:
   - Niagara
   - VFX Breakdown
   - Shaders
-category: 分享 / Share
+category: 分享
 lang: en
-image: /assets/interior-room-reference.webp
-imageAlt: Placeholder preview for Niagara VFX study breakdown.
 sample: true
 sort: 10
 sourceItem: niagara-vfx-study
@@ -21,11 +19,6 @@ sourceItem: niagara-vfx-study
 Realtime VFX Artist
 
 A breakdown-oriented Niagara study exploring layered motion, material modulation, and timing hierarchy.
-
-<figure>
-  <img src="/assets/interior-room-reference.webp" alt="Placeholder preview for Niagara VFX study breakdown." />
-  <figcaption>Placeholder preview for Niagara VFX study breakdown.</figcaption>
-</figure>
 
 ## Emitters
 

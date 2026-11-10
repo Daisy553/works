@@ -2,7 +2,7 @@
 
 ## Product Direction
 
-This repository is a personal blog with the portfolio kept as one section. The homepage is the reading surface: the same ambient room, a note list, and a way into the works archive. `/works/` is the album: category index, same-page detail view, and the existing background video.
+This repository is a personal blog. The homepage is the article stream. `/archive/` lists titles by year, `/about/` is the short introduction, and `/works/` is the album, linked from the end of the navigation and from the about page.
 
 Do not turn the homepage into a marketing landing page. Notes stay in Markdown. Work entries stay in `public/project-data.js`.
 
@@ -16,9 +16,8 @@ Do not turn the homepage into a marketing landing page. Notes stay in Markdown. 
 - Keep reading layout, navigation, and long-form type in `src/styles/site.css`.
 - Keep shared head, room background, and SEO tags in `src/layouts/Base.astro`.
 - Do not give a work its own case-study URL. The album detail view is still the work page. A note may link back to `/works/`.
-- Do not change the owner's email or phone unless that contact change is the task. Both values are rendered from the identity panel and repeated in the reading-page colophon:
+- Do not change the owner's email, Bilibili URL, or GitHub URL unless that contact change is the task. The footer and the about page list only those three. Do not add a phone number back into the site or `public/project-data.js`.
   - `bigorangeyong@gmail.com`
-  - `18747442595`
 
 ## Notes
 

@@ -1,7 +1,6 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import Colophon from '../../components/Colophon.astro';
 import {
   adjacentPosts,
   formatPostDate,
@@ -65,48 +64,45 @@ const jsonLd = {
   publishedTime={published}
   bodyClass="is-reading"
 >
-  <article class="article-shell sheet" id="content" lang={post.data.lang === 'en' ? 'en' : 'zh-CN'}>
+  <article class="article-shell" id="content" lang={post.data.lang === 'en' ? 'en' : 'zh-CN'}>
     <header class="article-header">
-      <div class="sheet-mark" aria-hidden="true"></div>
-      <p class="eyebrow">{post.data.sample ? 'Sample · 样稿' : 'Note'} · {post.data.category}</p>
+      <p class="article-kicker">{post.data.sample ? '样稿' : '文章'} · {post.data.category}</p>
       <h1>{post.data.title}</h1>
       <p class="post-meta">
         <time datetime={published}>{formatPostDate(post)}</time>
-        <span aria-hidden="true">·</span>
         <span>约 {minutes} 分钟</span>
       </p>
-      <ul class="tag-list">
-        {
-          post.data.tags.map((tag) => (
-            <li>
-              <a href={`/tags/${tagSlug(tag)}/`}>{tag}</a>
-            </li>
-          ))
-        }
-      </ul>
     </header>
     <div class="prose">
       <Content />
     </div>
-    <nav class="post-pager" aria-label="相邻笔记">
+    <ul class="article-tags">
       {
-        newer && (
-          <a class="pager-newer" href={`/notes/${newer.id}/`} rel="prev">
-            <span>较新</span>
-            <strong>{newer.data.title}</strong>
-          </a>
-        )
+        post.data.tags.map((tag) => (
+          <li>
+            <a href={`/tags/${tagSlug(tag)}/`}>{tag}</a>
+          </li>
+        ))
       }
+    </ul>
+    <nav class="post-pager" aria-label="相邻文章">
       {
         older && (
-          <a class="pager-older" href={`/notes/${older.id}/`} rel="next">
-            <span>较旧</span>
+          <a class="pager-prev" href={`/notes/${older.id}/`} rel="prev">
+            <span>上一篇</span>
             <strong>{older.data.title}</strong>
           </a>
         )
       }
+      {
+        newer && (
+          <a class="pager-next" href={`/notes/${newer.id}/`} rel="next">
+            <span>下一篇</span>
+            <strong>{newer.data.title}</strong>
+          </a>
+        )
+      }
     </nav>
-    <Colophon />
   </article>
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 </Base>
