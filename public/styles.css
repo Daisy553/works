@@ -553,7 +553,7 @@ body.is-detail-open #pixel-bg {
 }
 
 .directory::before {
-  content: "Index";
+  content: "目录";
   margin-bottom: 12px;
   color: var(--paper);
   font-size: 0.68rem;

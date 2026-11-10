@@ -1,0 +1,15 @@
+---
+import Base from '../layouts/Base.astro';
+
+const description = '这个地址没有对应的页面。';
+---
+
+<Base title="未找到" description={description} bodyClass="is-page">
+  <main class="blog-column" id="content">
+    <header class="page-head">
+      <h1>这一页不在这里</h1>
+      <p class="page-intro">地址没有对应的文章。</p>
+    </header>
+    <a class="more-link" href="/">回到文章</a>
+  </main>
+</Base>

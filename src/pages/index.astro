@@ -1,0 +1,51 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import PostList from '../components/PostList.astro';
+import { formatPostDate, postDateTime, publishedPosts, readingMinutesFor } from '../lib/posts.mjs';
+import { siteDescription, siteTagline } from '../lib/site.mjs';
+
+const posts = publishedPosts(await getCollection('posts'));
+const [feature, ...rest] = posts;
+---
+
+<Base title="Daisy Lab" description={siteDescription} bodyClass="is-home">
+  <main class="blog-column" id="content">
+    <header class="mast">
+      <img src="/assets/work/zhiyong-avatar.webp" width="64" height="64" alt="智勇" />
+      <div>
+        <h1>Daisy Lab</h1>
+        <p>{siteTagline}</p>
+      </div>
+    </header>
+
+    {
+      feature && (
+        <a class="feature-card" href={`/notes/${feature.id}/`}>
+          {feature.data.image ? (
+            <img src={feature.data.image} alt={feature.data.imageAlt || ''} />
+          ) : (
+            <span class="feature-fallback" aria-hidden="true"></span>
+          )}
+          <span class="feature-copy">
+            <p class="post-meta">
+              <time datetime={postDateTime(feature)}>{formatPostDate(feature)}</time>
+              <span>{feature.data.category}</span>
+              <span>约 {readingMinutesFor(feature)} 分钟</span>
+            </p>
+            <h2>{feature.data.title}</h2>
+            <p>{feature.data.description}</p>
+            <p class="post-meta">
+              {feature.data.tags.map((tag) => (
+                <span>{tag}</span>
+              ))}
+            </p>
+          </span>
+        </a>
+      )
+    }
+
+    {rest.length > 0 && <PostList posts={rest} />}
+    <a class="more-link" href="/notes/">更多文章</a>
+  </main>
+</Base>

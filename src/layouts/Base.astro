@@ -1,0 +1,94 @@
+---
+import '../styles/site.css';
+import SiteNav from '../components/SiteNav.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { absoluteUrl, canonicalPath, defaultImage, defaultImageAlt, siteDescription } from '../lib/site.mjs';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  imageAlt?: string;
+  type?: 'website' | 'article';
+  publishedTime?: string;
+  bodyClass?: string;
+  showNav?: boolean;
+}
+
+const {
+  title = 'Daisy Lab',
+  description = siteDescription,
+  image = defaultImage,
+  imageAlt = defaultImageAlt,
+  type = 'website',
+  publishedTime,
+  bodyClass = '',
+  showNav = true,
+} = Astro.props;
+
+const site = Astro.site ?? new URL('https://daisy553.pages.dev');
+const path = canonicalPath(Astro.url.pathname);
+const canonical = absoluteUrl(path, site);
+const fullTitle = title === 'Daisy Lab' ? 'Daisy Lab' : `${title} · Daisy Lab`;
+const ogImage = new URL(image, site).href;
+const feed = new URL('/rss.xml', site).href;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content="智勇" />
+    <meta name="theme-color" content="#030302" />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/assets/work/zhiyong-avatar.webp" type="image/webp" />
+    <link rel="alternate" type="application/rss+xml" title="Daisy Lab" href={feed} />
+    <meta property="og:site_name" content="Daisy Lab" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content={imageAlt} />
+    {publishedTime && <meta property="article:published_time" content={publishedTime} />}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@500;600&family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class={bodyClass}>
+    <a class="skip-link" href="#content">跳到正文</a>
+    <video
+      class="room-bg-video"
+      id="room-bg-video"
+      aria-hidden="true"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="metadata"
+      poster="/assets/interior-room-reference.webp"
+    >
+      <source src="/assets/background-loop.webm" type="video/webm" />
+      <source src="/assets/background-loop.mp4" type="video/mp4" />
+    </video>
+    <canvas id="pixel-bg" aria-hidden="true"></canvas>
+    {showNav && <SiteNav />}
+    <slot />
+    <SiteFooter />
+    <script is:inline src="/project-data.js"></script>
+    <script is:inline src="/portfolio-state.js"></script>
+    <script is:inline src="/script.js"></script>
+  </body>
+</html>

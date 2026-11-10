@@ -1,15 +1,18 @@
 ﻿const assert = require("assert");
-const { DAISY_PORTFOLIO } = require("../project-data.js");
+const { DAISY_PORTFOLIO } = require("../public/project-data.js");
 
 const requiredCategories = [
-  ["about", "关于我 / About"],
-  ["personal", "作品 / Works"],
-  ["breakdown", "分享 / Share"],
-  ["commercial", "商业项目 / Commercial"],
+  ["about", "关于我"],
+  ["personal", "作品"],
+  ["breakdown", "分享"],
+  ["commercial", "商业项目"],
 ];
 
 assert.ok(DAISY_PORTFOLIO, "DAISY_PORTFOLIO export is required");
 assert.strictEqual(DAISY_PORTFOLIO.owner.name, "Daisy Lab");
+assert.strictEqual(DAISY_PORTFOLIO.owner.email, "bigorangeyong@gmail.com");
+assert.strictEqual(DAISY_PORTFOLIO.owner.phone, undefined);
+assert.ok(!JSON.stringify(DAISY_PORTFOLIO).includes("18747442595"));
 assert.strictEqual(
   DAISY_PORTFOLIO.owner.links.bilibili,
   "https://space.bilibili.com/3247232?spm_id_from=333.1007.0.0",

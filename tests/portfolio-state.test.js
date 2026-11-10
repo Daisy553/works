@@ -5,7 +5,7 @@ const {
   getAdjacentAlbumItems,
   normalizeAlbumIndex,
   getInitialCategoryId,
-} = require('../portfolio-state.js');
+} = require('../public/portfolio-state.js');
 
 const data = {
   categories: [

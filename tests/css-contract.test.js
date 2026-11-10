@@ -2,7 +2,8 @@ const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
 
-const css = fs.readFileSync(path.join(__dirname, '..', 'styles.css'), 'utf8');
+const css = fs.readFileSync(path.join(__dirname, '..', 'public', 'styles.css'), 'utf8');
+const siteCss = fs.readFileSync(path.join(__dirname, '..', 'src', 'styles', 'site.css'), 'utf8');
 
 const requiredSelectors = [
   '.room-bg-video',
@@ -38,12 +39,14 @@ for (const selector of requiredSelectors) {
   assert.ok(css.includes(selector), `required CSS contract missing: ${selector}`);
 }
 
-assert.ok(!/orb|bokeh/i.test(css), 'CSS should not include orb or bokeh visual language');
-assert.ok(!/ambient-light-layer|ambient-beam|ambient-glint|ambientBeam/i.test(css), 'CSS should not reintroduce detached ambient light layers');
-assert.ok(!/letter-spacing\s*:\s*-\d/i.test(css), 'CSS should not use negative letter spacing');
-assert.ok(!/font-size\s*:\s*-?\d*\.?\d+vw\s*;/i.test(css), 'CSS should not use unbounded vw-only font sizes');
+for (const fileCss of [css, siteCss]) {
+  assert.ok(!/orb|bokeh/i.test(fileCss), 'CSS should not include orb or bokeh visual language');
+  assert.ok(!/ambient-light-layer|ambient-beam|ambient-glint|ambientBeam/i.test(fileCss), 'CSS should not reintroduce detached ambient light layers');
+  assert.ok(!/letter-spacing\s*:\s*-\d/i.test(fileCss), 'CSS should not use negative letter spacing');
+  assert.ok(!/font-size\s*:\s*-?\d*\.?\d+vw\s*;/i.test(fileCss), 'CSS should not use unbounded vw-only font sizes');
+}
 
-const radiusDeclarations = css.match(/border-radius\s*:\s*[^;]+;/gi) || [];
+const radiusDeclarations = `${css}\n${siteCss}`.match(/border-radius\s*:\s*[^;]+;/gi) || [];
 
 for (const declaration of radiusDeclarations) {
   assert.ok(!/50%/i.test(declaration), `CSS should not use circular radius: ${declaration}`);

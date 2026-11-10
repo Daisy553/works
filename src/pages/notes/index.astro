@@ -1,0 +1,19 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PostList from '../../components/PostList.astro';
+import { publishedPosts } from '../../lib/posts.mjs';
+import { siteDescription, siteTagline } from '../../lib/site.mjs';
+
+const posts = publishedPosts(await getCollection('posts'));
+---
+
+<Base title="文章" description={siteDescription} bodyClass="is-page">
+  <main class="blog-column" id="content">
+    <header class="page-head">
+      <h1>文章</h1>
+      <p class="page-intro">{siteTagline}</p>
+    </header>
+    <PostList posts={posts} />
+  </main>
+</Base>

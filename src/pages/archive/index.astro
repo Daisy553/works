@@ -1,0 +1,37 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { formatPostDate, groupByArchive, postDateTime, publishedPosts } from '../../lib/posts.mjs';
+import { siteDescription } from '../../lib/site.mjs';
+
+const groups = groupByArchive(publishedPosts(await getCollection('posts')));
+const description = 'Daisy Lab 的文章归档，按时间列出标题。';
+---
+
+<Base title="归档" description={description} bodyClass="is-page">
+  <main class="blog-column" id="content">
+    <header class="page-head">
+      <h1>归档</h1>
+      <p class="page-intro">{siteDescription}</p>
+    </header>
+    {
+      groups.map(([label, posts]) => (
+        <section aria-labelledby={`year-${label}`}>
+          <h2 class="archive-year" id={`year-${label}`}>
+            {label}
+          </h2>
+          <ol class="archive-list">
+            {posts.map((post) => (
+              <li>
+                <a href={`/notes/${post.id}/`}>
+                  <strong>{post.data.title}</strong>
+                  <time datetime={postDateTime(post)}>{formatPostDate(post)}</time>
+                </a>
+              </li>
+            ))}
+          </ol>
+        </section>
+      ))
+    }
+  </main>
+</Base>

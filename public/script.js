@@ -91,6 +91,18 @@
         removeEventListener() {},
       };
 
+  function sitePath(src) {
+    if (typeof src !== 'string' || src.length === 0) {
+      return '';
+    }
+
+    if (/^(?:[a-z][a-z\d+.-]*:|\/|#)/i.test(src)) {
+      return src;
+    }
+
+    return `/${src.replace(/^\.\//, '')}`;
+  }
+
   function getItems() {
     return stateApi.getCategoryItems(portfolio, appState.categoryId);
   }
@@ -131,12 +143,18 @@
     }
   }
 
+  function visibleCategories() {
+    return (portfolio.categories || []).filter((category) => category.id !== 'about');
+  }
+
   function renderNavigation() {
-    if (!categoryNav || !Array.isArray(portfolio.categories)) {
+    const categories = visibleCategories();
+
+    if (!categoryNav || categories.length === 0) {
       return;
     }
 
-    const buttons = portfolio.categories.map((category, index) => {
+    const buttons = categories.map((category, index) => {
       const button = document.createElement('button');
       const isActive = category.id === appState.categoryId;
       const itemCount = stateApi.getCategoryItems(portfolio, category.id).length;
@@ -149,7 +167,7 @@
 
       button.className = `directory-button${isActive ? ' is-active' : ''}${isFeedback ? ' is-feedback' : ''}`;
       button.dataset.categoryId = category.id;
-      button.setAttribute('aria-label', `${category.label}, ${itemCount} ${itemCount === 1 ? 'work' : 'works'}`);
+      button.setAttribute('aria-label', `${category.label}，${itemCount} 件`);
       button.setAttribute('aria-pressed', String(isActive));
       button.setAttribute('data-index', directoryIndex);
       if (isActive) {
@@ -274,9 +292,9 @@
     card.className = `album-card is-${position}`;
     card.tabIndex = position === 'hidden' ? -1 : 0;
     card.setAttribute('role', 'button');
-    card.setAttribute('aria-label', `${item.title}, ${position === 'active' ? 'open detail' : 'select work'}`);
+    card.setAttribute('aria-label', `${item.title}，${position === 'active' ? '打开详情' : '选中作品'}`);
 
-    image.src = item.thumbnail;
+    image.src = sitePath(item.thumbnail);
     image.alt = item.title;
     image.loading = position === 'active' ? 'eager' : 'lazy';
 
@@ -284,7 +302,7 @@
     title.textContent = item.title;
     meta.textContent = [item.year, item.role].filter(Boolean).join(' / ');
     action.className = 'album-action';
-    action.textContent = position === 'active' ? 'View Case' : 'Bring Forward';
+    action.textContent = position === 'active' ? '查看' : '翻到前面';
 
     caption.append(title, meta, action);
     card.append(image, caption);
@@ -326,7 +344,7 @@
     if (items.length === 0) {
       const empty = document.createElement('p');
       empty.className = 'album-empty';
-      empty.textContent = 'No works in this category yet.';
+      empty.textContent = '这个分类还没有作品。';
       finishAlbumRender([empty], direction);
       return;
     }
@@ -407,8 +425,8 @@
 
     if (media.type === 'video') {
       const video = document.createElement('video');
-      video.src = media.src;
-      video.poster = media.poster || '';
+      video.src = sitePath(media.src);
+      video.poster = sitePath(media.poster || '');
       video.controls = true;
       video.autoplay = true;
       video.muted = true;
@@ -419,7 +437,7 @@
     }
 
     const image = document.createElement('img');
-    image.src = media.src;
+    image.src = sitePath(media.src);
     image.alt = media.alt || 'Project image';
     if (media.fit === 'contain') {
       image.classList.add('is-contain');
@@ -609,6 +627,12 @@
       shell.inert = true;
     }
 
+    document.querySelectorAll('.room-nav, .skip-link').forEach((element) => {
+      if ('inert' in element) {
+        element.inert = true;
+      }
+    });
+
     moveFocusIntoDetail();
   }
 
@@ -626,6 +650,12 @@
     if (shell && 'inert' in shell) {
       shell.inert = false;
     }
+
+    document.querySelectorAll('.room-nav, .skip-link').forEach((element) => {
+      if ('inert' in element) {
+        element.inert = false;
+      }
+    });
 
     restorePreviousFocus();
   }
@@ -684,7 +714,7 @@
   }
 
   function isForegroundTarget(target) {
-    return target instanceof Element && Boolean(target.closest('.identity-panel, .album-stage, .directory, .detail-view.is-open'));
+    return target instanceof Element && Boolean(target.closest('.identity-panel, .album-stage, .directory, .detail-view.is-open, .sheet, .room-nav, .skip-link'));
   }
 
   function updateBackgroundDrift(event) {
@@ -1032,6 +1062,12 @@
   }
 
   function init() {
+    const firstVisible = visibleCategories()[0];
+
+    if (firstVisible) {
+      appState.categoryId = firstVisible.id;
+    }
+
     renderNavigation();
     renderAlbum();
     bindEvents();
@@ -1045,7 +1081,7 @@
           drawBackground(0);
         }
       };
-      backgroundImage.src = portfolio.background.src;
+      backgroundImage.src = sitePath(portfolio.background.src);
     }
 
     startBackground();
