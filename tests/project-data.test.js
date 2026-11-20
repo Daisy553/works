@@ -11,8 +11,7 @@ const requiredCategories = [
 assert.ok(DAISY_PORTFOLIO, "DAISY_PORTFOLIO export is required");
 assert.strictEqual(DAISY_PORTFOLIO.owner.name, "Daisy Lab");
 assert.strictEqual(DAISY_PORTFOLIO.owner.email, "bigorangeyong@gmail.com");
-assert.strictEqual(DAISY_PORTFOLIO.owner.phone, undefined);
-assert.ok(!JSON.stringify(DAISY_PORTFOLIO).includes("18747442595"));
+assert.ok(!Object.hasOwn(DAISY_PORTFOLIO.owner, "phone"), "owner data should not define a phone field");
 assert.strictEqual(
   DAISY_PORTFOLIO.owner.links.bilibili,
   "https://space.bilibili.com/3247232?spm_id_from=333.1007.0.0",

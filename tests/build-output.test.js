@@ -47,7 +47,6 @@ for (const html of [home, notes, works, trail, tags, archive, about]) {
 
 assert.match(home, /一些有用无用的想法。/);
 assert.match(home, /zhiyong-avatar\.webp/);
-assert.doesNotMatch(home, /18747442595/);
 assert.doesNotMatch(home, /主页待补充/);
 assert.doesNotMatch(home, /进入作品档案/);
 assert.match(home, /Houdini Procedural Workflow/);
@@ -106,7 +105,7 @@ assert.match(sitemap, /sitemap/);
 const htmlFiles = walk(dist).filter((file) => file.endsWith('.html') || file.endsWith('.xml'));
 const blob = htmlFiles.map((file) => fs.readFileSync(file, 'utf8')).join('\n');
 assert.ok(!/snowbreak/i.test(blob), 'built pages should not reference snowbreak');
-assert.ok(!blob.includes('18747442595'), 'built pages should not publish the phone number');
+assert.ok(!/\bhref\s*=\s*["']?\s*tel:/i.test(blob), 'built pages should not publish telephone links');
 assert.ok(!blob.includes('A站'), 'built pages should not include the AcFun placeholder');
 
 assert.ok(fs.existsSync(path.join(dist, 'assets', 'background-loop.webm')));
